@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+=======
 	<classpathentry kind="lib" path="lib/h2-1.3.173.jar"/>
+>>>>>>> 4c6772eaa14aa19e5a6de4bc1c46297496ec9358
 	<classpathentry kind="output" path="bin"/>
 </classpath>
