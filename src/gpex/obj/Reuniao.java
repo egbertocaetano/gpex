@@ -1,10 +1,10 @@
 package gpex.obj;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Reuniao {
 	private int id;
-	private Date dataHora;
+	private Timestamp dataHora;
 	private String observacao;
 	
 	public int getId() {
@@ -13,10 +13,10 @@ public class Reuniao {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getDataHora() {
+	public Timestamp getDataHora() {
 		return dataHora;
 	}
-	public void setDataHora(Date dataHora) {
+	public void setDataHora(Timestamp dataHora) {
 		this.dataHora = dataHora;
 	}
 	public String getObservacao() {

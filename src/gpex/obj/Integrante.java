@@ -1,19 +1,21 @@
 package gpex.obj;
 
 public class Integrante {
-	private Candidato candidato;
-	private Equipe equipe;
+	//private Candidato candidato;
+	private int candidato;
+	//private Equipe equipe;
+	private int equipe;
 	
-	public Candidato getCandidato() {
+	public int getCandidato() {
 		return candidato;
 	}
-	public void setCandidato(Candidato candidato) {
+	public void setCandidato(int candidato) {
 		this.candidato = candidato;
 	}
-	public Equipe getEquipe() {
+	public int getEquipe() {
 		return equipe;
 	}
-	public void setEquipe(Equipe equipe) {
+	public void setEquipe(int equipe) {
 		this.equipe = equipe;
 	}
 }

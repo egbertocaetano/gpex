@@ -7,8 +7,10 @@ public class Tarefa {
 	private String descricao;
 	private Date prazo;
 	private Reuniao reuniao;
-	private Tarefa pai;
-	private Projeto projeto;
+	//private Tarefa pai;
+	private int pai;
+	//private Projeto projeto;
+	private int projeto;
 	
 	public int getId() {
 		return id;
@@ -34,16 +36,16 @@ public class Tarefa {
 	public void setReuniao(Reuniao reuniao) {
 		this.reuniao = reuniao;
 	}
-	public Tarefa getPai() {
+	public int getPai() {
 		return pai;
 	}
-	public void setPai(Tarefa pai) {
+	public void setPai(int pai) {
 		this.pai = pai;
 	}
-	public Projeto getProjeto() {
+	public int getProjeto() {
 		return projeto;
 	}
-	public void setProjeto(Projeto projeto) {
+	public void setProjeto(int projeto) {
 		this.projeto = projeto;
 	}
 }

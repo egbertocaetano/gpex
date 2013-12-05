@@ -4,8 +4,10 @@ import gpex.bd.ConnectionFactory;
 import gpex.obj.Candidato;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class CandidatoDAO {
 	private Connection conexao;
@@ -37,6 +39,67 @@ public class CandidatoDAO {
 	      }
 	}
 
+	public Vector<Candidato> buscarTodos() {  
+	      conectar();  
+	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      ResultSet rs;  
+	      try {  
+	         rs = comando.executeQuery("SELECT * FROM Candidato");  
+	         while (rs.next()) {  
+	            Candidato temp = new Candidato();  
+	            // pega todos os atributos do Candidato  
+	            temp.setId(rs.getInt("id"));  
+	            temp.setNome(rs.getString("nome"));  
+	            temp.setMatricula(rs.getString("matricula"));  
+	            temp.setEmail(rs.getString("email"));  
+	            resultados.add(temp);  
+	         }  
+	         return resultados;  
+	      } catch (SQLException e) {  
+	         System.out.println("Erro ao buscar Candidatos" + e.getMessage());  
+	         return null;  
+	      }  
+	   }  
+	  
+	   public void atualizar(Candidato Candidato) {  
+	      conectar();
+	      String com = "UPDATE Candidato SET nome = '" + Candidato.getNome()  
+	            + "', matricula =" + Candidato.getMatricula() + ", email = '"  
+	            + Candidato.getEmail() + "' WHERE  id = '" + Candidato.getId() + "';";  
+	      System.out.println("Atualizada!");  
+	      try {  
+	         comando.executeUpdate(com);  
+	      } catch (SQLException e) {  
+	         e.printStackTrace();  
+	      } finally {  
+	         fechar();
+	      }  
+	   }  
+	  
+	   public Vector<Candidato> buscar(int id) {  
+	      conectar();  
+	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      ResultSet rs;  
+	      try {  
+	         rs = comando.executeQuery("SELECT * FROM Candidato WHERE id LIKE '"  
+	               + id + "%';");  
+	         while (rs.next()) {  
+	            Candidato temp = new Candidato();  
+	            // pega todos os atributos da Candidato  
+	            temp.setId(rs.getInt("id"));  
+	            temp.setNome(rs.getString("nome"));  
+	            temp.setMatricula(rs.getString("matricula"));  
+	            temp.setEmail(rs.getString("email"));  
+	            resultados.add(temp);  
+	         }  
+	         return resultados;  
+	      } catch (SQLException e) {  
+	         System.out.println("Erro ao buscar Candidato" + e.getMessage());  
+	         return null;  
+	      }  
+	  
+	   }  
+	
 	private void conectar() {
 	      try {
 	         this.conexao = ConnectionFactory.getConnection();
