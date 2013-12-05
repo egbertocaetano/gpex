@@ -24,7 +24,7 @@ public class CreateDB {
         query.execute("create table Selecao(id int primary key auto_increment, data datetime not null ) ");
         query.execute("create table Candidato(id int primary key auto_increment, nome varchar(255) not null, matricula varchar(10) not null unique, email varchar(255) not null)");
         query.execute("create table Projeto(id int primary key auto_increment, descricao varchar (255) not null )");
-        query.execute("create table Equipe(id int primary key auto_increment, projeto_id int null, constraint FK_Equipe_Projeto_Id FOREIGN KEY (projeto_id) REFERENCES Projeto(id) ) ");
+        query.execute("create table Equipe(id int primary key auto_increment, projeto_id int not null, constraint FK_Equipe_Projeto_Id FOREIGN KEY (projeto_id) REFERENCES Projeto(id) ) ");
         
         
         query.execute("create table Integrante(id int not null, equipe_id int not null, primary key(id), constraint FK_Candidato_Id FOREIGN KEY (id) REFERENCES Candidato(id), constraint FK_Equipe_Id FOREIGN KEY (equipe_id) REFERENCES Equipe(id) )");

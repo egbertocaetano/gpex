@@ -1,7 +1,8 @@
 package gpex.bd.DAO;
 
 import gpex.bd.ConnectionFactory;
-import gpex.obj.Candidato;
+import gpex.obj.Tarefa;
+import gpex.obj.Tarefa;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,19 +10,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-public class CandidatoDAO {
+public class TarefaDAO {
+	/*
+	TODO:
 	private Connection conexao;
 	private Statement comando;
 	
-	public void insere(Candidato candidato){
+	public void insere(Tarefa tarefa){
 	      conectar();
 	      try {
-	         comando.executeUpdate("INSERT INTO Candidato VALUES('"
-	               + candidato.getId() + "', '" + candidato.getNome() + "',"
-	               + candidato.getMatricula() + ",'" + candidato.getEmail() + "')");
+	         comando.executeUpdate("INSERT INTO Tarefa VALUES('"
+	               + tarefa.getId() + "', '" + tarefa.getNome() + "',"
+	               + tarefa.getMatricula() + ",'" + tarefa.getEmail() + "')");
 	         System.out.println("Inserida!");
 	      } catch (SQLException e) {
-	         System.out.println("Erro ao inserir Candidato" + e.getMessage());
+	         System.out.println("Erro ao inserir Tarefa" + e.getMessage());
 	      } finally {
 	         fechar();
 	      }
@@ -30,24 +33,24 @@ public class CandidatoDAO {
 	public void apaga(int id) {
 	      conectar();
 	      try {
-	         comando.executeUpdate("DELETE FROM Candidato WHERE id = '" + id
+	         comando.executeUpdate("DELETE FROM Tarefa WHERE id = '" + id
 	                     + "';");
 	      } catch (SQLException e) {
-	         System.out.println("Erro ao apagar Candidato" + e.getMessage());
+	         System.out.println("Erro ao apagar Tarefa" + e.getMessage());
 	      } finally {
 	         fechar();
 	      }
 	}
 
-	public Vector<Candidato> buscarTodos() {  
+	public Vector<Tarefa> buscarTodos() {  
 	      conectar();  
-	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      Vector<Tarefa> resultados = new Vector<Tarefa>();  
 	      ResultSet rs;  
 	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Candidato");  
+	         rs = comando.executeQuery("SELECT * FROM Tarefa");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos do Candidato  
+	            Tarefa temp = new Tarefa();  
+	            // pega todos os atributos do Tarefa  
 	            temp.setId(rs.getInt("id"));  
 	            temp.setNome(rs.getString("nome"));  
 	            temp.setMatricula(rs.getString("matricula"));  
@@ -56,16 +59,16 @@ public class CandidatoDAO {
 	         }  
 	         return resultados;  
 	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Candidatos" + e.getMessage());  
+	         System.out.println("Erro ao buscar Tarefas" + e.getMessage());  
 	         return null;  
 	      }  
 	   }  
 	  
-	   public void atualizar(Candidato candidato) {  
+	   public void atualizar(Tarefa tarefa) {  
 	      conectar();
-	      String com = "UPDATE Candidato SET nome = '" + candidato.getNome()  
-	            + "', matricula =" + candidato.getMatricula() + ", email = '"  
-	            + candidato.getEmail() + "' WHERE  id = '" + candidato.getId() + "';";  
+	      String com = "UPDATE Tarefa SET nome = '" + tarefa.getNome()  
+	            + "', matricula =" + tarefa.getMatricula() + ", email = '"  
+	            + tarefa.getEmail() + "' WHERE  id = '" + tarefa.getId() + "';";  
 	      System.out.println("Atualizada!");  
 	      try {  
 	         comando.executeUpdate(com);  
@@ -76,16 +79,16 @@ public class CandidatoDAO {
 	      }  
 	   }  
 	  
-	   public Vector<Candidato> buscar(int id) {  
+	   public Vector<Tarefa> buscar(int id) {  
 	      conectar();  
-	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      Vector<Tarefa> resultados = new Vector<Tarefa>();  
 	      ResultSet rs;  
 	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Candidato WHERE id LIKE '"  
+	         rs = comando.executeQuery("SELECT * FROM Tarefa WHERE id LIKE '"  
 	               + id + "%';");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos da Candidato  
+	            Tarefa temp = new Tarefa();  
+	            // pega todos os atributos da Tarefa  
 	            temp.setId(rs.getInt("id"));  
 	            temp.setNome(rs.getString("nome"));  
 	            temp.setMatricula(rs.getString("matricula"));  
@@ -94,7 +97,7 @@ public class CandidatoDAO {
 	         }  
 	         return resultados;  
 	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Candidato" + e.getMessage());  
+	         System.out.println("Erro ao buscar Tarefa" + e.getMessage());  
 	         return null;  
 	      }  
 	  
@@ -120,5 +123,5 @@ public class CandidatoDAO {
 	      } catch (SQLException e) {
 	         System.out.println("Erro ao fechar conexão" + e.getMessage());
 	      }
-	   }
+	   }*/
 }

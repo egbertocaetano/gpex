@@ -1,7 +1,8 @@
 package gpex.bd.DAO;
 
 import gpex.bd.ConnectionFactory;
-import gpex.obj.Candidato;
+import gpex.obj.Equipe;
+import gpex.obj.Equipe;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,19 +10,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-public class CandidatoDAO {
+public class EquipeDAO {
 	private Connection conexao;
 	private Statement comando;
 	
-	public void insere(Candidato candidato){
+	public void insere(Equipe equipe){
 	      conectar();
 	      try {
-	         comando.executeUpdate("INSERT INTO Candidato VALUES('"
-	               + candidato.getId() + "', '" + candidato.getNome() + "',"
-	               + candidato.getMatricula() + ",'" + candidato.getEmail() + "')");
+	         comando.executeUpdate("INSERT INTO Equipe VALUES('"
+	               + equipe.getId() + "' , '" + equipe.getProjetoId() + "')");
 	         System.out.println("Inserida!");
 	      } catch (SQLException e) {
-	         System.out.println("Erro ao inserir Candidato" + e.getMessage());
+	         System.out.println("Erro ao inserir Equipe" + e.getMessage());
 	      } finally {
 	         fechar();
 	      }
@@ -30,42 +30,40 @@ public class CandidatoDAO {
 	public void apaga(int id) {
 	      conectar();
 	      try {
-	         comando.executeUpdate("DELETE FROM Candidato WHERE id = '" + id
+	         comando.executeUpdate("DELETE FROM Equipe WHERE id = '" + id
 	                     + "';");
 	      } catch (SQLException e) {
-	         System.out.println("Erro ao apagar Candidato" + e.getMessage());
+	         System.out.println("Erro ao apagar Equipe" + e.getMessage());
 	      } finally {
 	         fechar();
 	      }
 	}
 
-	public Vector<Candidato> buscarTodos() {  
+	public Vector<Equipe> buscarTodos() {  
 	      conectar();  
-	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      Vector<Equipe> resultados = new Vector<>();
 	      ResultSet rs;  
 	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Candidato");  
+	         rs = comando.executeQuery("SELECT * FROM Equipe");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos do Candidato  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
-	            resultados.add(temp);  
+	            Equipe temp = new Equipe();  
+	            // pega todos os atributos da Equipe  
+	            temp.setId(rs.getInt("id"));
+	            temp.setProjetoId(rs.getInt("projeto_id"));
+	            resultados.add(temp);
 	         }  
 	         return resultados;  
 	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Candidatos" + e.getMessage());  
+	         System.out.println("Erro ao buscar Equipes" + e.getMessage());  
 	         return null;  
 	      }  
 	   }  
-	  
-	   public void atualizar(Candidato candidato) {  
+
+	
+	   public void atualizar(Equipe equipe) {  
 	      conectar();
-	      String com = "UPDATE Candidato SET nome = '" + candidato.getNome()  
-	            + "', matricula =" + candidato.getMatricula() + ", email = '"  
-	            + candidato.getEmail() + "' WHERE  id = '" + candidato.getId() + "';";  
+	      String com = "UPDATE Equipe SET projeto_id = '" + equipe.getProjetoId()  
+	            + "' WHERE  id = '" + equipe.getId() + "';";  
 	      System.out.println("Atualizada!");  
 	      try {  
 	         comando.executeUpdate(com);  
@@ -76,25 +74,23 @@ public class CandidatoDAO {
 	      }  
 	   }  
 	  
-	   public Vector<Candidato> buscar(int id) {  
+	   public Vector<Equipe> buscar(int id) {  
 	      conectar();  
-	      Vector<Candidato> resultados = new Vector<Candidato>();  
+	      Vector<Equipe> resultados = new Vector<>();  
 	      ResultSet rs;  
 	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Candidato WHERE id LIKE '"  
+	         rs = comando.executeQuery("SELECT * FROM Equipe WHERE id LIKE '"  
 	               + id + "%';");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos da Candidato  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
+	            Equipe temp = new Equipe();  
+	            // pega todos os atributos da Equipe  
+	            temp.setId(rs.getInt("id"));
+	            temp.setProjetoId(rs.getInt("projeto_id"));
 	            resultados.add(temp);  
 	         }  
 	         return resultados;  
 	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Candidato" + e.getMessage());  
+	         System.out.println("Erro ao buscar Equipe" + e.getMessage());  
 	         return null;  
 	      }  
 	  

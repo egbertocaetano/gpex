@@ -1,12 +1,12 @@
 package gpex.obj;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Tarefa {
 	private int id;
 	private String descricao;
-	private Date prazo;
-	private Reuniao reuniao;
+	private Timestamp prazo;
+	private Timestamp reuniao;
 	//private Tarefa pai;
 	private int pai;
 	//private Projeto projeto;
@@ -24,16 +24,16 @@ public class Tarefa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Date getPrazo() {
+	public Timestamp getPrazo() {
 		return prazo;
 	}
-	public void setPrazo(Date prazo) {
+	public void setPrazo(Timestamp prazo) {
 		this.prazo = prazo;
 	}
-	public Reuniao getReuniao() {
+	public Timestamp getReuniao() {
 		return reuniao;
 	}
-	public void setReuniao(Reuniao reuniao) {
+	public void setReuniao(Timestamp reuniao) {
 		this.reuniao = reuniao;
 	}
 	public int getPai() {
