@@ -46,12 +46,7 @@ public class CandidatoDAO {
 	      try {  
 	         rs = comando.executeQuery("SELECT * FROM Candidato");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos do Candidato  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
+	            Candidato temp = new Candidato(rs.getInt("id"), rs.getString("nome"), rs.getString("matricula"), rs.getString("email"));
 	            resultados.add(temp);  
 	         }  
 	         return resultados;  
@@ -84,12 +79,7 @@ public class CandidatoDAO {
 	         rs = comando.executeQuery("SELECT * FROM Candidato WHERE id LIKE '"  
 	               + id + "%';");  
 	         while (rs.next()) {  
-	            Candidato temp = new Candidato();  
-	            // pega todos os atributos da Candidato  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
+	            Candidato temp = new Candidato(rs.getInt("id"), rs.getString("nome"), rs.getString("matricula"), rs.getString("email"));
 	            resultados.add(temp);  
 	         }  
 	         return resultados;  
