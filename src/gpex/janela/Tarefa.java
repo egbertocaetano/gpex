@@ -5,20 +5,30 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import java.awt.Component;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+
 import java.awt.TextArea;
+
 import javax.swing.JProgressBar;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Tarefa extends JFrame {
@@ -33,21 +43,23 @@ public class Tarefa extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
-	public static void main(String[] args) {		
-		
-		Tarefa frame = new Tarefa();
-		frame.setVisible(true);
-	}	
+	 */	
+	public Tarefa()
+	{
+		inicializa();
+	}
 	
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public Tarefa() {
+	public void inicializa() {
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
 		
 		setBounds(100, 100, 576, 491);
-		setVisible(true);
-		
+		setVisible(true);		
 		
 		JPanel panel = new JPanel();
 		panel.setName("Tarefa");
@@ -64,11 +76,11 @@ public class Tarefa extends JFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(595)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 558, GroupLayout.PREFERRED_SIZE)
+							.addGap(37)
 							.addComponent(table, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 559, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 557, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 558, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 557, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -76,9 +88,9 @@ public class Tarefa extends JFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(table, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
 		);
@@ -123,13 +135,17 @@ public class Tarefa extends JFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnNovo = new JButton("Novo");
+		JButton btnNovo = new JButton("Nova Sub Tarefa");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNovo.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(78)
+					.addGap(39)
 					.addComponent(btnRetroceder)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnAvanar)
@@ -139,7 +155,7 @@ public class Tarefa extends JFrame {
 					.addComponent(btnEditar)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNovo)
-					.addContainerGap(78, Short.MAX_VALUE))
+					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -202,7 +218,7 @@ public class Tarefa extends JFrame {
 		lblData.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textData = new JTextField();
-		textData.setText("31/12/2012");
+		textData.setText(dateFormat.format(date));
 		textData.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textData.setEditable(false);
 		textData.setColumns(10);
@@ -217,48 +233,48 @@ public class Tarefa extends JFrame {
 								.addComponent(lblDescrio)
 								.addComponent(lblNome))
 							.addGap(24)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(integrantes, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addGap(97)
-									.addComponent(lblStatus)
-									.addGap(8))
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(nome, GroupLayout.PREFERRED_SIZE, 442, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(descricao, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-									.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-										.addGroup(gl_panel.createSequentialGroup()
-											.addComponent(textData, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-											.addGap(23))
-										.addGroup(gl_panel.createSequentialGroup()
-											.addComponent(lblData)
-											.addGap(48))))))
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+									.addGroup(gl_panel.createSequentialGroup()
+										.addGap(1)
+										.addComponent(integrantes, 0, 223, Short.MAX_VALUE)
+										.addGap(96)
+										.addComponent(lblStatus)
+										.addGap(8))
+									.addGroup(gl_panel.createSequentialGroup()
+										.addComponent(descricao, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+										.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+											.addGroup(gl_panel.createSequentialGroup()
+												.addComponent(textData, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+												.addGap(23))
+											.addGroup(gl_panel.createSequentialGroup()
+												.addComponent(lblData)
+												.addGap(48)))))))
 						.addComponent(lblIntegrantes))
-					.addContainerGap(16, Short.MAX_VALUE))
+					.addContainerGap(14, Short.MAX_VALUE))
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(101)
-							.addComponent(superTarefa, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblSuperTarefa)))
-					.addPreferredGap(ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+					.addContainerGap()
+					.addComponent(lblSuperTarefa)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(superTarefa, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
+					.addGap(123)
 					.addComponent(statusTarefa, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
 					.addGap(51))
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(234)
 					.addComponent(lblSubTarefa, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(234, Short.MAX_VALUE))
+					.addContainerGap(238, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNome))
+					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -268,8 +284,8 @@ public class Tarefa extends JFrame {
 							.addGap(12)
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblIntegrantes, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-								.addComponent(integrantes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStatus)))
+								.addComponent(lblStatus)
+								.addComponent(integrantes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(17)
 							.addComponent(lblData, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
