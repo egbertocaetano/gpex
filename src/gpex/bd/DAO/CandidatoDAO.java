@@ -1,6 +1,5 @@
 package gpex.bd.DAO;
 
-import gpex.bd.ConnectionFactory;
 import gpex.obj.Candidato;
 
 import java.util.ArrayList;
