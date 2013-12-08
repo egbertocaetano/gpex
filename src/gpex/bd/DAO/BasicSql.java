@@ -1,7 +1,5 @@
 package gpex.bd.DAO;
 
-import gpex.obj.Candidato;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,13 +21,13 @@ public abstract class BasicSql {
 	
 	public abstract void inserir(Object object) throws Exception;
 	
-	public abstract void alterar(Object object)throws Exception;
+	public abstract void alterar(Object object) throws Exception;
 	
-	public abstract void deletar(Object object)throws Exception;
+	public abstract void deletar(Object object) throws Exception;
 	
-	public abstract ArrayList<Object> buscarTodos()throws Exception;
+	public abstract ArrayList<Object> buscarTodos() throws Exception;
 	
-	public abstract Object buscarId(int id)throws Exception;
+	public abstract Object buscarId(int id) throws Exception;
 	
 	public void abreConexao(){
 		

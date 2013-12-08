@@ -1,127 +1,129 @@
 package gpex.bd.DAO;
 
-import gpex.bd.ConnectionFactory;
-import gpex.obj.Tarefa;
+import gpex.obj.Projeto;
+import gpex.obj.Reuniao;
 import gpex.obj.Tarefa;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
 
-public class TarefaDAO {
+public class TarefaDAO extends BasicSql{
+	
+	private Tarefa tarefa;
+	
 	/*
-	TODO:
-	private Connection conexao;
-	private Statement comando;
-	
-	public void insere(Tarefa tarefa){
-	      conectar();
-	      try {
-	         comando.executeUpdate("INSERT INTO Tarefa VALUES('"
-	               + tarefa.getId() + "', '" + tarefa.getNome() + "',"
-	               + tarefa.getMatricula() + ",'" + tarefa.getEmail() + "')");
-	         System.out.println("Inserida!");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao inserir Tarefa" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
-	   }
-	
-	public void apaga(int id) {
-	      conectar();
-	      try {
-	         comando.executeUpdate("DELETE FROM Tarefa WHERE id = '" + id
-	                     + "';");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao apagar Tarefa" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
+	 * Insere as informações de um objeto Tarefa em uma nova linha no banco de dados.
+	 * @param	Objeto Tarefa com as informações a serem inseridas.
+	 */
+	@Override
+	public void inserir(Object object) throws Exception{
+		
+		tarefa = (Tarefa) object;
+		
+		abreConexao();
+		
+        stmt.executeUpdate("INSERT INTO Tarefa VALUES('"
+               + tarefa.getId() + "', '" + tarefa.getDescricao() 
+               + "', '" + tarefa.getPrazo() + "', '" + tarefa.getReuniao() 
+               + "', '" + tarefa.getPai() + "', '" + tarefa.getProjeto() + "')");
+         
+         System.out.println("Tarefa cadastrada com sucesso.");
+         
+         fechaConexao();
 	}
-
-	public Vector<Tarefa> buscarTodos() {  
-	      conectar();  
-	      Vector<Tarefa> resultados = new Vector<Tarefa>();  
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Tarefa");  
-	         while (rs.next()) {  
-	            Tarefa temp = new Tarefa();  
-	            // pega todos os atributos do Tarefa  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
-	            resultados.add(temp);  
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Tarefas" + e.getMessage());  
-	         return null;  
-	      }  
-	   }  
-	  
-	   public void atualizar(Tarefa tarefa) {  
-	      conectar();
-	      String com = "UPDATE Tarefa SET nome = '" + tarefa.getNome()  
-	            + "', matricula =" + tarefa.getMatricula() + ", email = '"  
-	            + tarefa.getEmail() + "' WHERE  id = '" + tarefa.getId() + "';";  
-	      System.out.println("Atualizada!");  
-	      try {  
-	         comando.executeUpdate(com);  
-	      } catch (SQLException e) {  
-	         e.printStackTrace();  
-	      } finally {  
-	         fechar();
-	      }  
-	   }  
-	  
-	   public Vector<Tarefa> buscar(int id) {  
-	      conectar();  
-	      Vector<Tarefa> resultados = new Vector<Tarefa>();  
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Tarefa WHERE id LIKE '"  
-	               + id + "%';");  
-	         while (rs.next()) {  
-	            Tarefa temp = new Tarefa();  
-	            // pega todos os atributos da Tarefa  
-	            temp.setId(rs.getInt("id"));  
-	            temp.setNome(rs.getString("nome"));  
-	            temp.setMatricula(rs.getString("matricula"));  
-	            temp.setEmail(rs.getString("email"));  
-	            resultados.add(temp);  
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Tarefa" + e.getMessage());  
-	         return null;  
-	      }  
-	  
-	   }  
 	
-	private void conectar() {
-	      try {
-	         this.conexao = ConnectionFactory.getConnection();
-	         this.comando = this.conexao.createStatement();
-	         System.out.println("Conectado!");
-	      } catch (ClassNotFoundException e) {
-	    	  System.out.println("Erro ao carregar o driver" + e.getMessage());  
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao conectar" + e.getMessage());
-	      }
-	   }
+	/*
+	 * Altera uma linha no banco de dados cujo id coincida com a id do objeto Tarefa passado. 
+	 * @param	Objeto cuja linha de mesmo id no banco será alterada.
+	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
+	 */
+	@Override
+	public void alterar(Object object) throws Exception {
+		
+		tarefa = (Tarefa) object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("UPDATE Tarefa SET descricao = '" + tarefa.getDescricao() 
+				+ "', prazo = '" + tarefa.getPrazo() + "', reuniao_id = " + tarefa.getReuniao() 
+				+ ", tarefa_pai_id = " + tarefa.getPai() + ", projeto_id = " + tarefa.getProjeto() 
+				+ " WHERE  id = '" + tarefa.getId() + "';");
+		
+		
+		System.out.println("Tarefa atualizada com sucesso.");
+		
+		fechaConexao();
+		
+		
+	}
 	
-	private void fechar() {
-	      try {
-	         this.comando.close();
-	         this.conexao.close();
-	         System.out.println("Conexão Fechada");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao fechar conexão" + e.getMessage());
-	      }
-	   }*/
+	/*
+	 * Deleta um objeto no banco de acordo com o id do objeto Tarefa fornecido.
+	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
+	 */
+	@Override
+	public void deletar(Object object) throws Exception {
+		
+		tarefa = (Tarefa) object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("DELETE FROM Tarefa WHERE id = '" + tarefa.getId() + "';");
+		
+		fechaConexao();
+		
+		
+	}
+	
+	/*
+	 * Busca todas as linhas da tabela Tarefa
+	 * @return	Uma ArrayList de objetos Tarefa contendo cada em um uma linha da tabela.
+	 */
+	@Override
+	public ArrayList<Object> buscarTodos() throws Exception{
+		
+		ArrayList<Object> resultados = new ArrayList<Object>();
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Tarefa");
+		while (rs.next()) {
+			Tarefa temp = new Tarefa(rs.getInt("id"),
+					rs.getString("descricao"),
+					rs.getTimestamp("prazo"),
+					(Reuniao) new ReuniaoDAO().buscarId(rs.getInt("reuniao_id")),
+					(Tarefa) new TarefaDAO().buscarId(rs.getInt("tarefa_pai_id")),
+					(Projeto) new ProjetoDAO().buscarId(rs.getInt("projeto_id")));
+			resultados.add(temp);
+	
+		}
+		
+		fechaConexao();
+		
+		return resultados;
+	}
+	
+	/*
+	 * Busca uma linha da tabela Tarefa de acordo com seu id.
+	 * @param	Id da linha a ser buscada.
+	 * @return	Um objeto Tarefa com as informações da linha buscada.
+	 */
+	@Override
+	public Object buscarId(int id) throws Exception {
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Tarefa WHERE id LIKE '"
+				+ id + "%';");
+		
+		Tarefa temp = new Tarefa(rs.getInt("id"),
+				rs.getString("descricao"),
+				rs.getTimestamp("prazo"),
+				(Reuniao) new ReuniaoDAO().buscarId(rs.getInt("reuniao_id")),
+				(Tarefa) new TarefaDAO().buscarId(rs.getInt("tarefa_pai_id")),
+				(Projeto) new ProjetoDAO().buscarId(rs.getInt("projeto_id")));
+		
+		fechaConexao();
+		
+		return temp;
+	}
 }

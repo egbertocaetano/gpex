@@ -7,22 +7,19 @@ public class Reuniao {
 	private Timestamp dataHora;
 	private String observacao;
 	
+	public Reuniao(int id, Timestamp dataHora, String observacao){
+		this.id = id;
+		this.dataHora = dataHora;
+		this.observacao = observacao;
+	}
+	
 	public int getId() {
 		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public Timestamp getDataHora() {
 		return dataHora;
 	}
-	public void setDataHora(Timestamp dataHora) {
-		this.dataHora = dataHora;
-	}
 	public String getObservacao() {
 		return observacao;
-	}
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
 	}
 }
