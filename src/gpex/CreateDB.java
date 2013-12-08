@@ -20,7 +20,7 @@ public class CreateDB {
         // Cria tabelas
         Statement query = con.createStatement();
         
-        query.execute("create table Criterio(id int primary key auto_increment, descricao varchar(255) not null)");
+        query.execute("create table Criterio(id int primary key auto_increment, descricao varchar(255) not null, CR varchar(255) not null)");
         query.execute("create table Selecao(id int primary key auto_increment, data datetime not null ) ");
         query.execute("create table Candidato(id int primary key auto_increment, nome varchar(255) not null, matricula varchar(10) not null unique, email varchar(255) not null)");
         query.execute("create table Projeto(id int primary key auto_increment, descricao varchar (255) not null )");
@@ -33,15 +33,7 @@ public class CreateDB {
         query.execute("create table Frequencia( integrante_id int not null, reuniao_id int not null, primary key(integrante_id, reuniao_id), constraint FK_Integrante_Id FOREIGN KEY (integrante_id) REFERENCES Integrante(id), constraint FK_Frequencia_Reuniao_Id FOREIGN KEY (reuniao_id) REFERENCES Reuniao(id) )");
             
         query.execute("create table Status_Tarefa(id int primary key auto_increment, descricao varchar(100) not null)");
-        query.execute("create table Tarefa ("
-        		+ "id int primary key auto_increment, descricao varchar(255) not null, "
-        		+ "status_id int not null, prazo timestamp not null, "
-        		+ "integrante_id int not null, tarefa_id int not null, "
-        		+ "projeto_id int not null, "
-        		+ "constraint FK_Tarefa_Integrante_Id FOREIGN KEY (integrante_id) REFERENCES Integrante(id), "
-        		+ "constraint FK_Status_Id FOREIGN KEY (status_id) REFERENCES Status_Tarefa(id), "
-        		+ "constraint FK_Tarefa_Id FOREIGN KEY (tarefa_id) REFERENCES Tarefa(id), "
-        		+ "constraint FK_Projeto_Id FOREIGN KEY (projeto_id) REFERENCES Projeto(id)  ) ");
+        query.execute("create table Tarefa (id int primary key auto_increment, descricao varchar(255) not null, status_id int not null, prazo timestamp not null, integrante_id int not null, tarefa_id int not null, projeto_id int not null, constraint FK_Tarefa_Integrante_Id FOREIGN KEY (integrante_id) REFERENCES Integrante(id), constraint FK_Status_Id FOREIGN KEY (status_id) REFERENCES Status_Tarefa(id), constraint FK_Tarefa_Id FOREIGN KEY (tarefa_id) REFERENCES Tarefa(id), constraint FK_Projeto_Id FOREIGN KEY (projeto_id) REFERENCES Projeto(id)  ) "); // id?
 
 
         System.out.println("Criado!");

@@ -1,115 +1,118 @@
 package gpex.bd.DAO;
 
+import gpex.bd.ConnectionFactory;
+import gpex.obj.Candidato;
 import gpex.obj.Projeto;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 
-public class ProjetoDAO extends BasicSql{
-	private Projeto projeto;
+public class ProjetoDAO {
+	private Connection conexao;
+	private Statement comando;
 	
-	/*
-	 * Insere as informações de um objeto Projeto em uma nova linha no banco de dados.
-	 * @param	Objeto Projeto com as informações a serem inseridas.
-	 */
-	@Override
-	public void inserir(Object object) throws Exception{
-		
-		projeto = (Projeto) object;
-		
-		abreConexao();
-		
-        stmt.executeUpdate("INSERT INTO Projeto VALUES('"
-               + projeto.getId() + "', '" + projeto.getDescricao() + "')");
-         
-         System.out.println("Projeto cadastrada com sucesso.");
-         
-         fechaConexao();
+	public void insere(Projeto projeto){
+	      conectar();
+	      try {
+	         comando.executeUpdate("INSERT INTO Projeto VALUES('"
+	               + projeto.getId() + "','" + projeto.getDescricao() + "')");
+	         System.out.println("Inserida!");
+	      } catch (SQLException e) {
+	         System.out.println("Erro ao inserir Candidato" + e.getMessage());
+	      } finally {
+	         fechar();
+	      }
+	   }
+	
+	public void apaga(int id) {
+	      conectar();
+	      try {
+	         comando.executeUpdate("DELETE FROM Projeto WHERE id = '" + id
+	                     + "';");
+	      } catch (SQLException e) {
+	         System.out.println("Erro ao apagar Candidato" + e.getMessage());
+	      } finally {
+	         fechar();
+	      }
 	}
+
+	public Vector<Projeto> buscarTodos() {  
+	      conectar();  
+	      Vector<Projeto> resultados = new Vector<>();
+	      ResultSet rs;
+	      try {  
+	         rs = comando.executeQuery("SELECT * FROM Candidato");  
+	         while (rs.next()) {  
+	            Projeto temp = new Projeto();  
+	            // pega todos os atributos da Projeto  
+	            temp.setId(rs.getInt("id"));
+	            temp.setDescricao(rs.getString("descricao"));
+	            resultados.add(temp);  
+	         }  
+	         return resultados;  
+	      } catch (SQLException e) {  
+	         System.out.println("Erro ao buscar Projetos" + e.getMessage());  
+	         return null;  
+	      }  
+	   }  
+	  
+	public void atualizar(Projeto projeto) {  
+	      conectar();
+	      String com = "UPDATE Projeto SET descricao = '" + projeto.getDescricao()  
+	            + "' WHERE  id = '" + projeto.getId() + "';";  
+	      System.out.println("Atualizada!");  
+	      try {  
+	         comando.executeUpdate(com);  
+	      } catch (SQLException e) {  
+	         e.printStackTrace();  
+	      } finally {  
+	         fechar();
+	      }  
+	   }  
+	  
+	   public Vector<Projeto> buscar(int id) {  
+	      conectar();  
+	      Vector<Projeto> resultados = new Vector<>();  
+	      ResultSet rs;  
+	      try {  
+	         rs = comando.executeQuery("SELECT * FROM Projeto WHERE id LIKE '"  
+	               + id + "%';");  
+	         while (rs.next()) {  
+	            Projeto temp = new Projeto();  
+	            // pega todos os atributos da Projeto  
+	            temp.setId(rs.getInt("id"));
+	            resultados.add(temp);  
+	         }  
+	         return resultados;  
+	      } catch (SQLException e) {  
+	         System.out.println("Erro ao buscar Projeto" + e.getMessage());  
+	         return null;  
+	      }  
+	  
+	   }  
 	
-	/*
-	 * Altera uma linha no banco de dados cujo id coincida com a id do objeto Projeto passado. 
-	 * @param	Objeto cuja linha de mesmo id no banco será alterada.
-	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
-	 */
-	@Override
-	public void alterar(Object object) throws Exception {
-		
-		projeto = (Projeto) object;
-		
-		abreConexao();
-		
-		stmt.executeUpdate("UPDATE Projeto SET descricao = '" + projeto.getDescricao()
-				+ "' WHERE  id = '" + projeto.getId()
-				+ "';");
-		
-		
-		System.out.println("Projeto atualizada com sucesso.");
-		
-		fechaConexao();
-		
-		
-	}
+	private void conectar() {
+	      try {
+	         this.conexao = ConnectionFactory.getConnection();
+	         this.comando = this.conexao.createStatement();
+	         System.out.println("Conectado!");
+	      } catch (ClassNotFoundException e) {
+	    	  System.out.println("Erro ao carregar o driver" + e.getMessage());  
+	      } catch (SQLException e) {
+	         System.out.println("Erro ao conectar" + e.getMessage());
+	      }
+	   }
 	
-	/*
-	 * Deleta um objeto no banco de acordo com o id do objeto Projeto fornecido.
-	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
-	 */
-	@Override
-	public void deletar(Object object) throws Exception {
-		
-		projeto = (Projeto) object;
-		
-		abreConexao();
-		
-		stmt.executeUpdate("DELETE FROM Projeto WHERE id = '" + projeto.getId() + "';");
-		
-		fechaConexao();
-		
-		
-	}
-	
-	/*
-	 * Busca todas as linhas da tabela Projeto
-	 * @return	Uma ArrayList de objetos Projeto contendo cada em um uma linha da tabela.
-	 */
-	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
-		
-		ArrayList<Object> resultados = new ArrayList<Object>();
-		
-		abreConexao();
-		
-		rs = stmt.executeQuery("SELECT * FROM Projeto");
-		while (rs.next()) {
-			Projeto temp = new Projeto(rs.getInt("id"),
-					rs.getString("descricao"));
-			resultados.add(temp);
-	
-		}
-		
-		fechaConexao();
-		
-		return resultados;
-	}
-	
-	/*
-	 * Busca uma linha da tabela Projeto de acordo com seu id.
-	 * @param	Id da linha a ser buscada.
-	 * @return	Um objeto Projeto com as informações da linha buscada.
-	 */
-	@Override
-	public Object buscarId(int id) throws Exception {
-		
-		abreConexao();
-		
-		rs = stmt.executeQuery("SELECT * FROM Projeto WHERE id LIKE '"
-				+ id + "%';");
-		
-		Projeto temp = new Projeto(rs.getInt("id"),
-				rs.getString("descricao"));
-		
-		fechaConexao();
-		
-		return temp;
-	}
+	private void fechar() {
+	      try {
+	         this.comando.close();
+	         this.conexao.close();
+	         System.out.println("Conexão Fechada");
+	      } catch (SQLException e) {
+	         System.out.println("Erro ao fechar conexão" + e.getMessage());
+	      }
+	   }
 }

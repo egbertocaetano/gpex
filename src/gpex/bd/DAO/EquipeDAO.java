@@ -2,6 +2,7 @@ package gpex.bd.DAO;
 
 import gpex.bd.ConnectionFactory;
 import gpex.obj.Equipe;
+import gpex.obj.Equipe;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

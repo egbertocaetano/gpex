@@ -6,35 +6,46 @@ public class Tarefa {
 	private int id;
 	private String descricao;
 	private Timestamp prazo;
-	private Reuniao reuniao;
-	private Tarefa pai;
-	private Projeto projeto;
-	
-	public Tarefa(int id, String descricao, Timestamp prazo, Reuniao reuniao, Tarefa pai, Projeto projeto){
-		this.id = id;
-		this.descricao = descricao;
-		this.prazo = prazo;
-		this.reuniao = reuniao;
-		this.pai = pai;
-		this.projeto = projeto;
-	}
+	private Timestamp reuniao;
+	//private Tarefa pai;
+	private int pai;
+	//private Projeto projeto;
+	private int projeto;
 	
 	public int getId() {
 		return id;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getDescricao() {
 		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public Timestamp getPrazo() {
 		return prazo;
 	}
-	public Reuniao getReuniao() {
+	public void setPrazo(Timestamp prazo) {
+		this.prazo = prazo;
+	}
+	public Timestamp getReuniao() {
 		return reuniao;
 	}
-	public Tarefa getPai() {
+	public void setReuniao(Timestamp reuniao) {
+		this.reuniao = reuniao;
+	}
+	public int getPai() {
 		return pai;
 	}
-	public Projeto getProjeto() {
+	public void setPai(int pai) {
+		this.pai = pai;
+	}
+	public int getProjeto() {
 		return projeto;
+	}
+	public void setProjeto(int projeto) {
+		this.projeto = projeto;
 	}
 }
