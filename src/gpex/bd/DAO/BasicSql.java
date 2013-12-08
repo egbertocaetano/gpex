@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public abstract class BasicSql {
 
@@ -20,13 +21,15 @@ public abstract class BasicSql {
 	
 	
 	
-	public abstract void inserir(Object object);
+	public abstract void inserir(Object object) throws Exception;
 	
-	public abstract void alterar(Object object);
+	public abstract void alterar(Object object)throws Exception;
 	
-	public abstract void deletar(Object object);
+	public abstract void deletar(Object object)throws Exception;
 	
-	public abstract void buscar(Object object);
+	public abstract ArrayList<Object> buscarTodos()throws Exception;
+	
+	public abstract Object buscarId(int id)throws Exception;
 	
 	public void abreConexao(){
 		
