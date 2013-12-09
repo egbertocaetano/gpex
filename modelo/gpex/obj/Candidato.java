@@ -6,6 +6,7 @@ public class Candidato {
 	private String matricula;
 	private String email;
 	
+	
 	public Candidato (int id, String nome, String matricula, String email){
 		this.id = id;
 		this.nome = nome;

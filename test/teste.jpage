@@ -1,0 +1,5 @@
+gpex.obj.Candidato candidato = new gpex.obj.Candidato();
+java.lang.reflect.Method[] methods = candidato.getClass().getMethods();
+for(java.lang.reflect.Method method : methods){
+	System.out.println("INSERT INTO "+candidato.getClass());
+}

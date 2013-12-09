@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class BasicSql {
+public abstract class BasicSql<E> {
 
 	/**
 	 * Essa classe contém os comportamentos das subclasses deverão ter.
@@ -19,7 +20,7 @@ public abstract class BasicSql {
 	
 	
 	
-	public abstract void inserir(Object object) throws Exception;
+	public abstract void inserir(E object) throws Exception;
 	
 	public abstract void alterar(Object object) throws Exception;
 	
@@ -30,8 +31,8 @@ public abstract class BasicSql {
 	public abstract Object buscarId(int id) throws Exception;
 	
 	public void abreConexao(){
-		
 		try{
+			
 			
 			con = DriverManager.getConnection("jdbc:h2:~/extensao;AUTO_SERVER=TRUE", "sa", "");
 		
