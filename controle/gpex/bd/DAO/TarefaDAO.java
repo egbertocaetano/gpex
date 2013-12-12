@@ -6,7 +6,7 @@ import gpex.obj.Tarefa;
 
 import java.util.ArrayList;
 
-public class TarefaDAO extends BasicSql{
+public class TarefaDAO extends BasicSql<Tarefa>{
 	
 	private Tarefa tarefa;
 	
@@ -15,7 +15,7 @@ public class TarefaDAO extends BasicSql{
 	 * @param	Objeto Tarefa com as informações a serem inseridas.
 	 */
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Tarefa object) throws Exception{
 		
 		tarefa = (Tarefa) object;
 		
@@ -37,15 +37,15 @@ public class TarefaDAO extends BasicSql{
 	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
 	 */
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Tarefa object) throws Exception {
 		
 		tarefa = (Tarefa) object;
 		
 		abreConexao();
 		
 		stmt.executeUpdate("UPDATE Tarefa SET descricao = '" + tarefa.getDescricao() 
-				+ "', prazo = '" + tarefa.getPrazo() + "', reuniao_id = " + tarefa.getReuniao() 
-				+ ", tarefa_pai_id = " + tarefa.getPai() + ", projeto_id = " + tarefa.getProjeto() 
+				+ "', prazo = '" + tarefa.getPrazo() + "', reuniaoId = " + tarefa.getReuniao() 
+				+ ", tarefaPaiId = " + tarefa.getPai() + ", projetoId = " + tarefa.getProjeto() 
 				+ " WHERE  id = '" + tarefa.getId() + "';");
 		
 		
@@ -61,7 +61,7 @@ public class TarefaDAO extends BasicSql{
 	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 	 */
 	@Override
-	public void deletar(Object object) throws Exception {
+	public void deletar(Tarefa object) throws Exception {
 		
 		tarefa = (Tarefa) object;
 		
@@ -79,9 +79,9 @@ public class TarefaDAO extends BasicSql{
 	 * @return	Uma ArrayList de objetos Tarefa contendo cada em um uma linha da tabela.
 	 */
 	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
+	public ArrayList<Tarefa> buscarTodos() throws Exception{
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Tarefa> resultados = new ArrayList<Tarefa>();
 		
 		abreConexao();
 		
@@ -90,9 +90,9 @@ public class TarefaDAO extends BasicSql{
 			Tarefa temp = new Tarefa(rs.getInt("id"),
 					rs.getString("descricao"),
 					rs.getTimestamp("prazo"),
-					(Reuniao) new ReuniaoDAO().buscarId(rs.getInt("reuniao_id")),
-					(Tarefa) new TarefaDAO().buscarId(rs.getInt("tarefa_pai_id")),
-					(Projeto) new ProjetoDAO().buscarId(rs.getInt("projeto_id")));
+					new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")),
+					new TarefaDAO().buscarId(rs.getInt("tarefaPaiId")),
+					new ProjetoDAO().buscarId(rs.getInt("projetoId")));
 			resultados.add(temp);
 	
 		}
@@ -108,7 +108,7 @@ public class TarefaDAO extends BasicSql{
 	 * @return	Um objeto Tarefa com as informações da linha buscada.
 	 */
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Tarefa buscarId(int id) throws Exception {
 		
 		abreConexao();
 		
@@ -118,9 +118,9 @@ public class TarefaDAO extends BasicSql{
 		Tarefa temp = new Tarefa(rs.getInt("id"),
 				rs.getString("descricao"),
 				rs.getTimestamp("prazo"),
-				(Reuniao) new ReuniaoDAO().buscarId(rs.getInt("reuniao_id")),
-				(Tarefa) new TarefaDAO().buscarId(rs.getInt("tarefa_pai_id")),
-				(Projeto) new ProjetoDAO().buscarId(rs.getInt("projeto_id")));
+				new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")),
+				new TarefaDAO().buscarId(rs.getInt("tarefaPaiId")),
+				new ProjetoDAO().buscarId(rs.getInt("projetoId")));
 		
 		fechaConexao();
 		

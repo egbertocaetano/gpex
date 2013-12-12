@@ -4,10 +4,7 @@ import gpex.obj.Frequencia;
 
 import java.util.ArrayList;
 
-// TODO:	Seria o ideal deixar as variáveis iguais às colunas do banco?
-//			Ex: É reuniao_id no banco, mas idReuniao aqui.
-
-public class FrequenciaDAO extends BasicSql{
+public class FrequenciaDAO extends BasicSql<Frequencia>{
 	
 	private Frequencia frequencia;
 	
@@ -16,14 +13,14 @@ public class FrequenciaDAO extends BasicSql{
 	 * @param	Objeto Frequencia com as informações a serem inseridas.
 	 */
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Frequencia object) throws Exception{
 		
 		frequencia = (Frequencia) object;
 		
 		abreConexao();
 		
         stmt.executeUpdate("INSERT INTO Frequencia VALUES('"
-               + frequencia.getIdIntegrante() + "', '" + frequencia.getIdReuniao() + "')");
+               + frequencia.getIntegrante().getCandidato().getId() + "', '" + frequencia.getReuniao().getId() + "')");
          
          System.out.println("Frequencia cadastrada com sucesso.");
          
@@ -34,25 +31,25 @@ public class FrequenciaDAO extends BasicSql{
 	 * Altera uma linha no banco de dados cujo id coincida com a id do objeto Frequencia passado. 
 	 * @param	Objeto cuja linha de mesmo id no banco será alterada.
 	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
-	 * TODO:	set dataHoraReuniao where idIntegrante OU set idIntegrante where dataHoraReuniao?
-	 * TODO 2:	Pensando bem, como essa tabela é NxN, usar qualquer um dos jeitos acima vai dar errado (vai setar o reuniao_id
+	 * TODO:	set reuniaoId where integranteId OU set integranteId where reuniaoId?
+	 * TODO 2:	Pensando bem, como essa tabela é NxN, usar qualquer um dos jeitos acima vai dar errado (vai setar o reuniaoId
 	 * 			de todas as ocorrências, por exemplo).
 	 */
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Frequencia object) throws Exception {
 		
 		frequencia = (Frequencia) object;
 		
 		abreConexao();
 		
-		/*stmt.executeUpdate("UPDATE Frequencia SET reuniao_id = '" + frequencia.getIdReuniao()
-				+ "' WHERE  integrante_id = '" + frequencia.getIdIntegrante()
+		/*stmt.executeUpdate("UPDATE Frequencia SET reuniaoId = '" + frequencia.getReuniaoId()
+				+ "' WHERE  integranteId = '" + frequencia.getIntegranteId()
 				+ "';");
 		*/
 		
 		/*
-		stmt.executeUpdate("UPDATE Frequencia SET integrante_id = '" + frequencia.getIdIntegrante()
-				+ "' WHERE reuniao_id = '" + frequencia.getIdReuniao()
+		stmt.executeUpdate("UPDATE Frequencia SET integranteId = '" + frequencia.getIntegranteId()
+				+ "' WHERE reuniaoId = '" + frequencia.getReuniaoId()
 				+ "';");
 		*/
 		
@@ -68,14 +65,14 @@ public class FrequenciaDAO extends BasicSql{
 	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 	 */
 	@Override
-	public void deletar(Object object) throws Exception {
+	public void deletar(Frequencia object) throws Exception {
 		
 		frequencia = (Frequencia) object;
 		
 		abreConexao();
 		
-		stmt.executeUpdate("DELETE FROM Frequencia WHERE idIntegrante = '" + frequencia.getIdIntegrante() 
-				+ "' AND idReuniao = '" + frequencia.getIdReuniao() + "';");
+		stmt.executeUpdate("DELETE FROM Frequencia WHERE integranteId = '" + frequencia.getIntegrante().getCandidato().getId() 
+				+ "' AND reuniaoId = '" + frequencia.getReuniao().getId() + "';");
 		
 		fechaConexao();
 		
@@ -87,16 +84,17 @@ public class FrequenciaDAO extends BasicSql{
 	 * @return	Uma ArrayList de objetos Frequencia contendo cada em um uma linha da tabela.
 	 */
 	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
+	public ArrayList<Frequencia> buscarTodos() throws Exception{
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Frequencia> resultados = new ArrayList<>();
 		
 		abreConexao();
 		
 		rs = stmt.executeQuery("SELECT * FROM Frequencia");
 		while (rs.next()) {
-			Frequencia temp = new Frequencia(rs.getInt("integrante_id"),
-					rs.getInt("reuniao_id"));
+			Frequencia temp = new Frequencia(
+					new IntegranteDAO().buscarId(rs.getInt("integranteId")),
+					new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")));
 			resultados.add(temp);
 	
 		}
@@ -110,23 +108,19 @@ public class FrequenciaDAO extends BasicSql{
 	 * Busca uma linha da tabela Frequencia de acordo com seu id.
 	 * @param	Id da linha a ser buscada.
 	 * @return	Um objeto Frequencia com as informações da linha buscada.
-	 * TODO:	Busca pelo idIntegrante? ou pelo idReuniao?
+	 * TODO:	Busca pelo IntegranteId? ou pelo ReuniaoId?
 	 */
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Frequencia buscarId(int integranteId) throws Exception {
 		
 		abreConexao();
 		
-		rs = stmt.executeQuery("SELECT * FROM Fequencia WHERE idIntegrante LIKE '"
-				+ id + "%';");
+		rs = stmt.executeQuery("SELECT * FROM Fequencia WHERE integranteId LIKE '"
+				+ integranteId + "%';");
 		
-		/*
-		rs = stmt.executeQuery("SELECT * FROM Reuniao WHERE idIntegrante LIKE '"
-				+ id + "%';");
-		*/
-		
-		Frequencia temp = new Frequencia(rs.getInt("integrante_id"),
-				rs.getInt("reuniao_id"));
+		Frequencia temp = new Frequencia(
+				new IntegranteDAO().buscarId(rs.getInt("integranteId")),
+				new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")));
 		
 		fechaConexao();
 		

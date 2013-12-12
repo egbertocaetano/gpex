@@ -4,7 +4,7 @@ import gpex.obj.Criterio;
 
 import java.util.ArrayList;
 
-public class CriterioDAO extends BasicSql{
+public class CriterioDAO extends BasicSql<Criterio>{
 
 	private Criterio criterio;
 	
@@ -13,9 +13,9 @@ public class CriterioDAO extends BasicSql{
 	 * @param	Objeto Criterio com as informações a serem inseridas.
 	 */
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Criterio object) throws Exception{
 		
-		criterio = (Criterio) object;
+		criterio = object;
 		
 		abreConexao();
 		
@@ -33,9 +33,9 @@ public class CriterioDAO extends BasicSql{
 	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
 	 */
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Criterio object) throws Exception {
 		
-		criterio = (Criterio) object;
+		criterio = object;
 		
 		abreConexao();
 		
@@ -56,9 +56,9 @@ public class CriterioDAO extends BasicSql{
 	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 	 */
 	@Override
-	public void deletar(Object object) throws Exception {
+	public void deletar(Criterio object) throws Exception {
 		
-		criterio = (Criterio) object;
+		criterio = object;
 		
 		abreConexao();
 		
@@ -74,9 +74,9 @@ public class CriterioDAO extends BasicSql{
 	 * @return	Uma ArrayList de objetos Criterio contendo cada em um uma linha da tabela.
 	 */
 	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
+	public ArrayList<Criterio> buscarTodos() throws Exception{
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Criterio> resultados = new ArrayList<>();
 		
 		abreConexao();
 		
@@ -99,7 +99,7 @@ public class CriterioDAO extends BasicSql{
 	 * @return	Um objeto Criterio com as informações da linha buscada.
 	 */
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Criterio buscarId(int id) throws Exception {
 		
 		abreConexao();
 		

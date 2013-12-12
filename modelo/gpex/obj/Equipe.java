@@ -2,22 +2,18 @@ package gpex.obj;
 
 public class Equipe {
 	private int id;
-	private int projetoId;
-
-	public int getProjetoId() {
-		return projetoId;
+	private Projeto projeto;
+	
+	public Equipe(int id, Projeto projeto){
+		this.id = id;
+		this.projeto = projeto;
 	}
 
-	public void setProjetoId(int projetoId) {
-		this.projetoId = projetoId;
+	public Projeto getProjeto() {
+		return projeto;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+	}	
 }

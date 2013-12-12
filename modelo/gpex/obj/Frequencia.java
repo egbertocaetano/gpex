@@ -1,19 +1,20 @@
 package gpex.obj;
 
 public class Frequencia {
-	private int idIntegrante;
-	private int idReuniao;
+	private Integrante integrante;
+	private Reuniao reuniao;
 	
-	public Frequencia(int idIntegrante, int idReuniao){
-		this.idIntegrante = idIntegrante;
-		this.idReuniao = idReuniao;
+	public Frequencia(Integrante integrante, Reuniao reuniao){
+		this.integrante = integrante;
+		this.reuniao = reuniao;
 	}
 
-	public int getIdIntegrante() {
-		return idIntegrante;
+	public Integrante getIntegrante() {
+		return integrante;
 	}
 
-	public int getIdReuniao() {
-		return idReuniao;
+	public Reuniao getReuniao() {
+		return reuniao;
 	}
+
 }

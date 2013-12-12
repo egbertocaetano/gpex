@@ -1,119 +1,117 @@
 package gpex.bd.DAO;
 
-import gpex.bd.ConnectionFactory;
 import gpex.obj.Equipe;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
 
-public class EquipeDAO {
-	private Connection conexao;
-	private Statement comando;
+public class EquipeDAO extends BasicSql<Equipe>{
+	private Equipe equipe;
 	
-	public void insere(Equipe equipe){
-	      conectar();
-	      try {
-	         comando.executeUpdate("INSERT INTO Equipe VALUES('"
-	               + equipe.getId() + "' , '" + equipe.getProjetoId() + "')");
-	         System.out.println("Inserida!");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao inserir Equipe" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
-	   }
-	
-	public void apaga(int id) {
-	      conectar();
-	      try {
-	         comando.executeUpdate("DELETE FROM Equipe WHERE id = '" + id
-	                     + "';");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao apagar Equipe" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
+	/*
+	 * Insere as informações de um objeto Equipe em uma nova linha no banco de dados.
+	 * @param	Objeto Equipe com as informações a serem inseridas.
+	 */
+	@Override
+	public void inserir(Equipe object) throws Exception{
+		
+		equipe = object;
+		
+		abreConexao();
+		
+        stmt.executeUpdate("INSERT INTO Equipe VALUES('"
+               + equipe.getId() + "', '" + equipe.getProjeto().getId() + "')");
+         
+         System.out.println("Equipe cadastrada com sucesso.");
+         
+         fechaConexao();
 	}
-
-	public Vector<Equipe> buscarTodos() {  
-	      conectar();  
-	      Vector<Equipe> resultados = new Vector<>();
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Equipe");  
-	         while (rs.next()) {  
-	            Equipe temp = new Equipe();  
-	            // pega todos os atributos da Equipe  
-	            temp.setId(rs.getInt("id"));
-	            temp.setProjetoId(rs.getInt("projeto_id"));
-	            resultados.add(temp);
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Equipes" + e.getMessage());  
-	         return null;  
-	      }  
-	   }  
-
 	
-	   public void atualizar(Equipe equipe) {  
-	      conectar();
-	      String com = "UPDATE Equipe SET projeto_id = '" + equipe.getProjetoId()  
-	            + "' WHERE  id = '" + equipe.getId() + "';";  
-	      System.out.println("Atualizada!");  
-	      try {  
-	         comando.executeUpdate(com);  
-	      } catch (SQLException e) {  
-	         e.printStackTrace();  
-	      } finally {  
-	         fechar();
-	      }  
-	   }  
-	  
-	   public Vector<Equipe> buscar(int id) {  
-	      conectar();  
-	      Vector<Equipe> resultados = new Vector<>();  
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Equipe WHERE id LIKE '"  
-	               + id + "%';");  
-	         while (rs.next()) {  
-	            Equipe temp = new Equipe();  
-	            // pega todos os atributos da Equipe  
-	            temp.setId(rs.getInt("id"));
-	            temp.setProjetoId(rs.getInt("projeto_id"));
-	            resultados.add(temp);  
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Equipe" + e.getMessage());  
-	         return null;  
-	      }  
-	  
-	   }  
+	/*
+	 * Altera uma linha no banco de dados cujo id coincida com a id do objeto Equipe passado. 
+	 * @param	Objeto cuja linha de mesmo id no banco será alterada.
+	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
+	 */
+	@Override
+	public void alterar(Equipe object) throws Exception {
+		
+		equipe = object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("UPDATE Equipe SET descricao = '" + equipe.getProjeto().getId()
+				+ "' WHERE  id = '" + equipe.getId()
+				+ "';");
+		
+		
+		System.out.println("Equipe atualizada com sucesso.");
+		
+		fechaConexao();
+		
+		
+	}
 	
-	private void conectar() {
-	      try {
-	         this.conexao = ConnectionFactory.getConnection();
-	         this.comando = this.conexao.createStatement();
-	         System.out.println("Conectado!");
-	      } catch (ClassNotFoundException e) {
-	    	  System.out.println("Erro ao carregar o driver" + e.getMessage());  
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao conectar" + e.getMessage());
-	      }
-	   }
+	/*
+	 * Deleta um objeto no banco de acordo com o id do objeto Equipe fornecido.
+	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
+	 */
+	@Override
+	public void deletar(Equipe object) throws Exception {
+		
+		equipe = object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("DELETE FROM Equipe WHERE id = '" + equipe.getId() + "';");
+		
+		fechaConexao();
+		
+		
+	}
 	
-	private void fechar() {
-	      try {
-	         this.comando.close();
-	         this.conexao.close();
-	         System.out.println("Conexão Fechada");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao fechar conexão" + e.getMessage());
-	      }
-	   }
+	/*
+	 * Busca todas as linhas da tabela Equipe
+	 * @return	Uma ArrayList de objetos Equipe contendo cada em um uma linha da tabela.
+	 */
+	@Override
+	public ArrayList<Equipe> buscarTodos() throws Exception{
+		
+		ArrayList<Equipe> resultados = new ArrayList<>();
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Equipe");
+		while (rs.next()) {
+			Equipe temp = new Equipe(
+					rs.getInt("id"),
+					new ProjetoDAO().buscarId(rs.getInt("projetoId")));
+			resultados.add(temp);
+	
+		}
+		
+		fechaConexao();
+		
+		return resultados;
+	}
+	
+	/*
+	 * Busca uma linha da tabela Equipe de acordo com seu id.
+	 * @param	Id da linha a ser buscada.
+	 * @return	Um objeto Equipe com as informações da linha buscada.
+	 */
+	@Override
+	public Equipe buscarId(int id) throws Exception {
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Equipe WHERE id LIKE '"
+				+ id + "%';");
+		
+		Equipe temp = new Equipe(
+				rs.getInt("id"),
+				new ProjetoDAO().buscarId(rs.getInt("projetoId")));
+		
+		fechaConexao();
+		
+		return temp;
+	}
 }

@@ -1,132 +1,122 @@
 package gpex.bd.DAO;
 
-import gpex.bd.ConnectionFactory;
 import gpex.obj.Integrante;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
 
-public class IntegranteDAO {
-	private Connection conexao;
-	private Statement comando;
+public class IntegranteDAO extends BasicSql<Integrante>{
+	private Integrante integrante;
 	
-	public void insere(Integrante integrante){
-	      conectar();
-	      try {
-	         comando.executeUpdate("INSERT INTO Integrante VALUES('"
-	               + integrante.getCandidatoId() + "', '" + integrante.getEquipeId() + "')");
-	         System.out.println("Inserida!");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao inserir Integrante" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
-	   }
-	
-	public void apaga(int candidatoId) {
-	      conectar();
-	      try {
-	         comando.executeUpdate("DELETE FROM Integrante WHERE candidato_id = '" + candidatoId
-	                     + "';");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao apagar Integrante" + e.getMessage());
-	      } finally {
-	         fechar();
-	      }
+	/*
+	 * Insere as informações de um objeto Integrante em uma nova linha no banco de dados.
+	 * @param	Objeto Integrante com as informações a serem inseridas.
+	 */
+	@Override
+	public void inserir(Integrante object) throws Exception{
+		
+		integrante = object;
+		
+		abreConexao();
+		
+        stmt.executeUpdate("INSERT INTO Integrante VALUES('"
+               + integrante.getCandidato().getId() + "', '" + integrante.getEquipe().getId() + "')");
+         
+         System.out.println("Integrante cadastrada com sucesso.");
+         
+         fechaConexao();
 	}
-
-	public Vector<Integrante> buscarTodos() {  
-	      conectar();  
-	      Vector<Integrante> resultados = new Vector<Integrante>();  
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Integrante");  
-	         while (rs.next()) {  
-	            Integrante temp = new Integrante();  
-	            // pega todos os atributos do Integrante  
-	            temp.setCandidatoId(rs.getInt("candidato_id"));  
-	            temp.setEquipeId(rs.getInt("equipe_id"));   
-	            resultados.add(temp);  
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Integrantes" + e.getMessage());  
-	         return null;  
-	      }  
-	   }  
-	  
-	   public void atualizarCandidatoId(Integrante integrante) {  
-	      conectar();
-	      String com = "UPDATE Integrante SET candidato_id = '" + integrante.getCandidatoId()  
-	            + "' WHERE  equipe_id = '" + integrante.getEquipeId() + "';";  
-	      System.out.println("Atualizada!");  
-	      try {  
-	         comando.executeUpdate(com);  
-	      } catch (SQLException e) {  
-	         e.printStackTrace();  
-	      } finally {  
-	         fechar();
-	      }  
-	   }  
-	   
-	   public void atualizarEquipeId(Integrante integrante) {  
-		      conectar();
-		      String com = "UPDATE Integrante SET equipe_id = '" + integrante.getEquipeId()  
-		            + "' WHERE  candidato_id = '" + integrante.getCandidatoId() + "';";  
-		      System.out.println("Atualizada!");  
-		      try {  
-		         comando.executeUpdate(com);  
-		      } catch (SQLException e) {  
-		         e.printStackTrace();  
-		      } finally {  
-		         fechar();
-		      }  
-		   }  
-	  
-	   public Vector<Integrante> buscar(int id) {  
-	      conectar();  
-	      Vector<Integrante> resultados = new Vector<Integrante>();  
-	      ResultSet rs;  
-	      try {  
-	         rs = comando.executeQuery("SELECT * FROM Integrante WHERE id LIKE '"  
-	               + id + "%';");  
-	         while (rs.next()) {  
-	            Integrante temp = new Integrante();  
-	            // pega todos os atributos da Integrante  
-	            temp.setCandidatoId(rs.getInt("candidato_id"));  
-	            temp.setEquipeId(rs.getInt("equipe_id"));  
-	            resultados.add(temp);  
-	         }  
-	         return resultados;  
-	      } catch (SQLException e) {  
-	         System.out.println("Erro ao buscar Integrante" + e.getMessage());  
-	         return null;  
-	      }  
-	  
-	   }  
 	
-	private void conectar() {
-	      try {
-	         this.conexao = ConnectionFactory.getConnection();
-	         this.comando = this.conexao.createStatement();
-	         System.out.println("Conectado!");
-	      } catch (ClassNotFoundException e) {
-	    	  System.out.println("Erro ao carregar o driver" + e.getMessage());  
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao conectar" + e.getMessage());
-	      }
-	   }
+	/*
+	 * Altera uma linha no banco de dados cujo id coincida com a id do objeto Integrante passado. 
+	 * @param	Objeto cuja linha de mesmo id no banco será alterada.
+	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
+	 * TODO:	set candidatoId where equipeId OU set equipeId where candidatoId?
+	 * TODO 2:	Pensando bem, como essa tabela é NxN, usar qualquer um dos jeitos acima vai dar errado (vai setar o equipeId
+	 * 			de todas as ocorrências, por exemplo).
+	 */
+	@Override
+	public void alterar(Integrante object) throws Exception {
+		
+		integrante = object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("UPDATE Integrante SET equipeId = '" + integrante.getEquipe().getId()
+				+ "' WHERE candidatoId = '" + integrante.getCandidato().getId()
+				+ "';");
+		
+		
+		System.out.println("Integrante atualizada com sucesso.");
+		
+		fechaConexao();
+		
+		
+	}
 	
-	private void fechar() {
-	      try {
-	         this.comando.close();
-	         this.conexao.close();
-	         System.out.println("Conexão Fechada");
-	      } catch (SQLException e) {
-	         System.out.println("Erro ao fechar conexão" + e.getMessage());
-	      }
-	   }
+	/*
+	 * Deleta um objeto no banco de acordo com o id do objeto Integrante fornecido.
+	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
+	 */
+	@Override
+	public void deletar(Integrante object) throws Exception {
+		
+		integrante = object;
+		
+		abreConexao();
+		
+		stmt.executeUpdate("DELETE FROM Integrante WHERE equipeId = '" + integrante.getEquipe().getId() 
+				+ "' AND candidatoId = '" + integrante.getCandidato().getId() + "';");
+		
+		fechaConexao();
+		
+		
+	}
+	
+	/*
+	 * Busca todas as linhas da tabela Integrante
+	 * @return	Uma ArrayList de objetos Integrante contendo cada em um uma linha da tabela.
+	 */
+	@Override
+	public ArrayList<Integrante> buscarTodos() throws Exception{
+		
+		ArrayList<Integrante> resultados = new ArrayList<>();
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Integrante");
+		while (rs.next()) {
+			Integrante temp = new Integrante(
+					new CandidatoDAO().buscarId(rs.getInt("candidatoId")),
+					new EquipeDAO().buscarId(rs.getInt("equipeId")));
+			resultados.add(temp);
+	
+		}
+		
+		fechaConexao();
+		
+		return resultados;
+	}
+	
+	/*
+	 * Busca uma linha da tabela Integrante de acordo com seu id.
+	 * @param	Id da linha a ser buscada.
+	 * @return	Um objeto Integrante com as informações da linha buscada.
+	 * TODO:	É melhor passar o objeto como parâmentro?
+	 */
+	@Override
+	public Integrante buscarId(int id) throws Exception {
+		
+		abreConexao();
+		
+		rs = stmt.executeQuery("SELECT * FROM Integrante WHERE candidatoId LIKE '"
+				+ id + "%';");
+		
+		Integrante temp = new Integrante(
+				new CandidatoDAO().buscarId(rs.getInt("candidatoId")),
+				new EquipeDAO().buscarId(rs.getInt("equipeId")));
+		
+		fechaConexao();
+		
+		return temp;
+	}
 }

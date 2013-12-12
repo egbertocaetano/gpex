@@ -4,14 +4,14 @@ import gpex.obj.Candidato;
 
 import java.util.ArrayList;
 
-public class CandidatoDAO extends BasicSql{
+public class CandidatoDAO extends BasicSql<Candidato>{
 	
 	private Candidato candidato;
 	
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Candidato object) throws Exception{
 		
-		candidato = (Candidato) object;
+		candidato = object;
 		
 		abreConexao();
 		
@@ -26,9 +26,9 @@ public class CandidatoDAO extends BasicSql{
 	}
 
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Candidato object) throws Exception {
 		
-		candidato = (Candidato) object;
+		candidato = object;
 		
 		abreConexao();
 		
@@ -45,9 +45,9 @@ public class CandidatoDAO extends BasicSql{
 	}
 
 	@Override
-	public void deletar(Object object)throws Exception {
+	public void deletar(Candidato object)throws Exception {
 		
-		candidato = (Candidato) object;
+		candidato = object;
 		
 		abreConexao();
 		
@@ -60,10 +60,10 @@ public class CandidatoDAO extends BasicSql{
 
 	@Override
 	
-	public ArrayList<Object> buscarTodos()throws Exception{
+	public ArrayList<Candidato> buscarTodos()throws Exception{
 	
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Candidato> resultados = new ArrayList<>();
 		
 		abreConexao();
 		
@@ -78,13 +78,13 @@ public class CandidatoDAO extends BasicSql{
 		
 		fechaConexao();
 		
-		return  resultados;
+		return resultados;
 		
 		
 	}
 	
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Candidato buscarId(int id) throws Exception {
 		
 		abreConexao();
 		

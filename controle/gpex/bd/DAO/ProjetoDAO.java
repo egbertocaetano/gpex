@@ -4,7 +4,7 @@ import gpex.obj.Projeto;
 
 import java.util.ArrayList;
 
-public class ProjetoDAO extends BasicSql{
+public class ProjetoDAO extends BasicSql<Projeto>{
 	private Projeto projeto;
 	
 	/*
@@ -12,7 +12,7 @@ public class ProjetoDAO extends BasicSql{
 	 * @param	Objeto Projeto com as informações a serem inseridas.
 	 */
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Projeto object) throws Exception{
 		
 		projeto = (Projeto) object;
 		
@@ -32,7 +32,7 @@ public class ProjetoDAO extends BasicSql{
 	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
 	 */
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Projeto object) throws Exception {
 		
 		projeto = (Projeto) object;
 		
@@ -55,7 +55,7 @@ public class ProjetoDAO extends BasicSql{
 	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 	 */
 	@Override
-	public void deletar(Object object) throws Exception {
+	public void deletar(Projeto object) throws Exception {
 		
 		projeto = (Projeto) object;
 		
@@ -73,9 +73,9 @@ public class ProjetoDAO extends BasicSql{
 	 * @return	Uma ArrayList de objetos Projeto contendo cada em um uma linha da tabela.
 	 */
 	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
+	public ArrayList<Projeto> buscarTodos() throws Exception{
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Projeto> resultados = new ArrayList<>();
 		
 		abreConexao();
 		
@@ -98,7 +98,7 @@ public class ProjetoDAO extends BasicSql{
 	 * @return	Um objeto Projeto com as informações da linha buscada.
 	 */
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Projeto buscarId(int id) throws Exception {
 		
 		abreConexao();
 		

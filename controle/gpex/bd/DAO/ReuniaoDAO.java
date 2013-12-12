@@ -4,7 +4,7 @@ import gpex.obj.Reuniao;
 
 import java.util.ArrayList;
 	
-	public class ReuniaoDAO extends BasicSql{
+	public class ReuniaoDAO extends BasicSql<Reuniao>{
 		
 		private Reuniao reuniao;
 		
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 		 * @param	Objeto Reuniao com as informações a serem inseridas.
 		 */
 		@Override
-		public void inserir(Object object) throws Exception{
+		public void inserir(Reuniao object) throws Exception{
 			
 			reuniao = (Reuniao) object;
 			
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 		 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
 		 */
 		@Override
-		public void alterar(Object object) throws Exception {
+		public void alterar(Reuniao object) throws Exception {
 			
 			reuniao = (Reuniao) object;
 			
@@ -57,7 +57,7 @@ import java.util.ArrayList;
 		 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 		 */
 		@Override
-		public void deletar(Object object) throws Exception {
+		public void deletar(Reuniao object) throws Exception {
 			
 			reuniao = (Reuniao) object;
 			
@@ -75,9 +75,9 @@ import java.util.ArrayList;
 		 * @return	Uma ArrayList de objetos Reuniao contendo cada em um uma linha da tabela.
 		 */
 		@Override
-		public ArrayList<Object> buscarTodos() throws Exception{
+		public ArrayList<Reuniao> buscarTodos() throws Exception{
 			
-			ArrayList<Object> resultados = new ArrayList<Object>();
+			ArrayList<Reuniao> resultados = new ArrayList<>();
 			
 			abreConexao();
 			
@@ -100,7 +100,7 @@ import java.util.ArrayList;
 		 * @return	Um objeto Reuniao com as informações da linha buscada.
 		 */
 		@Override
-		public Object buscarId(int id) throws Exception {
+		public Reuniao buscarId(int id) throws Exception {
 			
 			abreConexao();
 			

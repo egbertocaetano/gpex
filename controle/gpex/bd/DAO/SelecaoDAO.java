@@ -4,7 +4,7 @@ import gpex.obj.Selecao;
 
 import java.util.ArrayList;
 
-public class SelecaoDAO extends BasicSql{
+public class SelecaoDAO extends BasicSql<Selecao>{
 	private Selecao selecao;
 	
 	/*
@@ -12,7 +12,7 @@ public class SelecaoDAO extends BasicSql{
 	 * @param	Objeto Selecao com as informações a serem inseridas.
 	 */
 	@Override
-	public void inserir(Object object) throws Exception{
+	public void inserir(Selecao object) throws Exception{
 		
 		selecao = (Selecao) object;
 		
@@ -32,7 +32,7 @@ public class SelecaoDAO extends BasicSql{
 	 * 			Todas as informações (excetuando o id) contidas neste objeto sobreporão as atuais no banco.
 	 */
 	@Override
-	public void alterar(Object object) throws Exception {
+	public void alterar(Selecao object) throws Exception {
 		
 		selecao = (Selecao) object;
 		
@@ -55,7 +55,7 @@ public class SelecaoDAO extends BasicSql{
 	 * @param	Objeto cuja linha de mesmo id no banco será deletada.
 	 */
 	@Override
-	public void deletar(Object object) throws Exception {
+	public void deletar(Selecao object) throws Exception {
 		
 		selecao = (Selecao) object;
 		
@@ -73,9 +73,9 @@ public class SelecaoDAO extends BasicSql{
 	 * @return	Uma ArrayList de objetos Selecao contendo cada em um uma linha da tabela.
 	 */
 	@Override
-	public ArrayList<Object> buscarTodos() throws Exception{
+	public ArrayList<Selecao> buscarTodos() throws Exception{
 		
-		ArrayList<Object> resultados = new ArrayList<Object>();
+		ArrayList<Selecao> resultados = new ArrayList<>();
 		
 		abreConexao();
 		
@@ -98,7 +98,7 @@ public class SelecaoDAO extends BasicSql{
 	 * @return	Um objeto Selecao com as informações da linha buscada.
 	 */
 	@Override
-	public Object buscarId(int id) throws Exception {
+	public Selecao buscarId(int id) throws Exception {
 		
 		abreConexao();
 		

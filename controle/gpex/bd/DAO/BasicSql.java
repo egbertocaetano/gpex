@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BasicSql<E> {
 
@@ -22,13 +21,13 @@ public abstract class BasicSql<E> {
 	
 	public abstract void inserir(E object) throws Exception;
 	
-	public abstract void alterar(Object object) throws Exception;
+	public abstract void alterar(E object) throws Exception;
 	
-	public abstract void deletar(Object object) throws Exception;
+	public abstract void deletar(E object) throws Exception;
 	
-	public abstract ArrayList<Object> buscarTodos() throws Exception;
+	public abstract ArrayList<E> buscarTodos() throws Exception;
 	
-	public abstract Object buscarId(int id) throws Exception;
+	public abstract E buscarId(int id) throws Exception;
 	
 	public void abreConexao(){
 		try{
