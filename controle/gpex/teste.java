@@ -1,7 +1,5 @@
 package gpex;
 
-import gpex.bd.DAO.IntegranteDAO;
-import gpex.obj.Integrante;
 
 public class teste {
 	

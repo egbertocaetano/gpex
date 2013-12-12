@@ -40,9 +40,8 @@ import java.util.ArrayList;
 			
 			abreConexao();
 			
-			// TODO: dataHora??? Como serão persistidos a data e hora?
 			stmt.executeUpdate("UPDATE Reuniao SET dataHora = '" + reuniao.getDataHora()
-					+ "', obs =" + reuniao.getObservacao() + "' WHERE  id = '" + reuniao.getId()
+					+ "', observacao =" + reuniao.getObservacao() + "' WHERE  id = '" + reuniao.getId()
 					+ "';");
 			
 			System.out.println("Reuniao atualizada com sucesso.");
@@ -84,7 +83,7 @@ import java.util.ArrayList;
 			rs = stmt.executeQuery("SELECT * FROM Reuniao");
 			while (rs.next()) {
 				Reuniao temp = new Reuniao(rs.getInt("id"),
-						rs.getTimestamp("dataHora"), rs.getString("obs"));
+						rs.getTimestamp("dataHora"), rs.getString("observacao"));
 				resultados.add(temp);
 		
 			}
@@ -108,7 +107,7 @@ import java.util.ArrayList;
 					+ id + "%';");
 			
 			Reuniao temp = new Reuniao(rs.getInt("id"),
-					rs.getTimestamp("dataHora"), rs.getString("obs"));
+					rs.getTimestamp("dataHora"), rs.getString("observacao"));
 			
 			fechaConexao();
 			
