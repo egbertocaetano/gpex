@@ -1,7 +1,5 @@
 package gpex.bd.DAO;
 
-import gpex.obj.Projeto;
-import gpex.obj.Reuniao;
 import gpex.obj.Tarefa;
 
 import java.util.ArrayList;
