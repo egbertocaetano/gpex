@@ -1,34 +1,33 @@
-package gpex.janela;
+﻿package gpex.janela;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
-import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.GridLayout;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+import com.toedter.calendar.JDateChooser;
 
 public class TelaTarefa {
 
@@ -79,7 +78,7 @@ public class TelaTarefa {
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(63, 16, 45, 15);
+		lblNome.setBounds(63, 21, 45, 15);
 		
 		textoNome = new JTextField();
 		textoNome.setBounds(126, 16, 371, 24);
@@ -90,11 +89,15 @@ public class TelaTarefa {
 		lblPrazo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrazo.setBounds(35, 55, 73, 15);
 		
-		JFormattedTextField textoPrazo = new JFormattedTextField();
-		textoPrazo.setBounds(126, 50, 112, 24);
-		textoPrazo.setToolTipText("Entre com o prazo");
+		JFormattedTextField textoPrazo = null;
 		
-		JLabel lblIntegrantes = new JLabel("Integrantes:");
+		try {
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		JLabel lblIntegrantes = new JLabel("Responsáveis:");
 		lblIntegrantes.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblIntegrantes.setBounds(19, 87, 89, 15);
 		
@@ -106,18 +109,18 @@ public class TelaTarefa {
 		btnAdicionar.setBounds(397, 82, 100, 25);
 		btnAdicionar.setMnemonic('A');
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(126, 118, 259, 69);
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scrollPaneResponsaveis = new JScrollPane();
+		scrollPaneResponsaveis.setBounds(126, 118, 259, 69);
+		scrollPaneResponsaveis.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		JButton btnRemover = new JButton("Remover");
 		btnRemover.setBounds(397, 116, 100, 25);
 		btnRemover.setToolTipText("Remover integrante selecionado");
 		btnRemover.setMnemonic('R');
 		
-		JLabel lblDescrio = new JLabel("Descrição:");
-		lblDescrio.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescrio.setBounds(34, 201, 74, 15);
+		JLabel lblDescricao = new JLabel("Descrição:");
+		lblDescricao.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescricao.setBounds(34, 201, 74, 15);
 		
 		JScrollPane scrollPaneDescricao = new JScrollPane();
 		scrollPaneDescricao.setBounds(126, 201, 371, 183);
@@ -147,11 +150,10 @@ public class TelaTarefa {
 		frmNovaTarefa.getContentPane().add(lblPrazo);
 		frmNovaTarefa.getContentPane().add(lblIntegrantes);
 		frmNovaTarefa.getContentPane().add(textoNome);
-		frmNovaTarefa.getContentPane().add(textoPrazo);
-		frmNovaTarefa.getContentPane().add(scrollPane_1);
+		frmNovaTarefa.getContentPane().add(scrollPaneResponsaveis);
 		
-		JList list = new JList();
-		scrollPane_1.setViewportView(list);
+		JList listResponsaveis = new JList();
+		scrollPaneResponsaveis.setViewportView(listResponsaveis);
 		frmNovaTarefa.getContentPane().add(comboBoxIntegrantes);
 		frmNovaTarefa.getContentPane().add(btnRemover);
 		frmNovaTarefa.getContentPane().add(btnAdicionar);
@@ -159,7 +161,7 @@ public class TelaTarefa {
 		
 		JEditorPane textoDescricao = new JEditorPane();
 		scrollPaneDescricao.setViewportView(textoDescricao);
-		frmNovaTarefa.getContentPane().add(lblDescrio);
+		frmNovaTarefa.getContentPane().add(lblDescricao);
 		frmNovaTarefa.getContentPane().add(painelTarefaPai);
 		frmNovaTarefa.getContentPane().add(painelSubtarefas);
 		painelSubtarefas.setLayout(new GridLayout(1, 0, 0, 0));
@@ -191,7 +193,7 @@ public class TelaTarefa {
 				scrollPane.setViewportView(tabelaSubtarefas);
 		
 		JSlider sliderProgresso = new JSlider();
-		sliderProgresso.setValue(100);
+		sliderProgresso.setValue(0);
 		sliderProgresso.setBounds(536, 42, 200, 16);
 		frmNovaTarefa.getContentPane().add(sliderProgresso);
 		
@@ -231,5 +233,14 @@ public class TelaTarefa {
 		JButton btnPrximo = new JButton("Próximo");
 		panelBotoes.add(btnPrximo);
 		btnPrximo.setMnemonic('P');
+		
+		JLabel labelProgresso = new JLabel("");
+		labelProgresso.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelProgresso.setBounds(647, 15, 89, 15);
+		frmNovaTarefa.getContentPane().add(labelProgresso);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(126, 50, 114, 22);
+		frmNovaTarefa.getContentPane().add(dateChooser);
 	}
 }
