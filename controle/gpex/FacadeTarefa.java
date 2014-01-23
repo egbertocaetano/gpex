@@ -1,45 +1,60 @@
 package gpex;
 
+import gpex.bd.DAO.IntegranteDAO;
 import gpex.bd.DAO.ProjetoDAO;
-import gpex.bd.DAO.ReuniaoDAO;
 import gpex.bd.DAO.TarefaDAO;
 import gpex.obj.Tarefa;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class FacadeTarefa {
+public  class FacadeTarefa {
 	
-	public int inserir(int id, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
+	
+	private static FacadeTarefa instancia;
+	
+	
+	public static FacadeTarefa getInstance(){
+		
+		if(instancia ==null){
+			instancia = new FacadeTarefa();
+		}
+		
+		return instancia;
+		
+	}
+	
+	public static int salvar(String nome, String descricao, Timestamp prazo, int pai_id, int projeto_id, int responsavel_id) throws Exception{
 		new TarefaDAO().inserir(new Tarefa(
-				id,
+				nome,
 				descricao,
 				prazo,
-				new ReuniaoDAO().buscarId(reuniao_id),
 				new TarefaDAO().buscarId(pai_id),
-				new ProjetoDAO().buscarId(projeto_id)));
+				new ProjetoDAO().buscarId(projeto_id),
+				new IntegranteDAO().buscarId(responsavel_id)));
 		
 		return 0;
 	}
 	
-	public int alterar(int id, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
+	public static int alterar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id, int responsavel_id) throws Exception{
 		new TarefaDAO().alterar(new Tarefa(
 				id,
+				nome,
 				descricao,
 				prazo,
-				new ReuniaoDAO().buscarId(reuniao_id),
 				new TarefaDAO().buscarId(pai_id),
-				new ProjetoDAO().buscarId(projeto_id)));
+				new ProjetoDAO().buscarId(projeto_id),
+				new IntegranteDAO().buscarId(responsavel_id)));
 		
 		return 0;
 	}
 	
-	public int deletar(int id, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
+	public static int deletar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
 		new TarefaDAO().deletar(new Tarefa(
 				id,
+				nome,
 				descricao,
 				prazo,
-				new ReuniaoDAO().buscarId(reuniao_id),
 				new TarefaDAO().buscarId(pai_id),
 				new ProjetoDAO().buscarId(projeto_id)));
 		
@@ -54,7 +69,6 @@ public class FacadeTarefa {
 					tarefa.getId()
 					,tarefa.getDescricao()
 					,tarefa.getPrazo()
-					,tarefa.getReuniao().getId()
 					,tarefa.getPai().getId()
 					,tarefa.getProjeto().getId()
 			});
@@ -70,7 +84,6 @@ public class FacadeTarefa {
 				tarefa.getId()
 				,tarefa.getDescricao()
 				,tarefa.getPrazo()
-				,tarefa.getReuniao().getId()
 				,tarefa.getPai().getId()
 				,tarefa.getProjeto().getId()
 		};

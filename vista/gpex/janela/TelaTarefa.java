@@ -1,11 +1,17 @@
 ﻿package gpex.janela;
 
+import gpex.FacadeTarefa;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Timestamp;
+import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,18 +33,31 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+
 import com.toedter.calendar.JDateChooser;
+
+import javax.swing.JProgressBar;
+import javax.swing.JToggleButton;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
 
 public class TelaTarefa {
 
 	private JFrame frmNovaTarefa;
 	private JTable tabelaSubtarefas;
 	private JTextField textoNome;
+	FacadeTarefa fTarefa = FacadeTarefa.getInstance();
+	SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+				
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -65,65 +84,43 @@ public class TelaTarefa {
 		frmNovaTarefa = new JFrame();
 		frmNovaTarefa.setResizable(false);
 		frmNovaTarefa.setTitle("Nova tarefa");
-		frmNovaTarefa.setBounds(-29, -28, 777, 473);
+		frmNovaTarefa.setBounds(-16, -28, 759, 473);
 		frmNovaTarefa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel painelSubtarefas = new JPanel();
-		painelSubtarefas.setBounds(536, 134, 200, 250);
+		painelSubtarefas.setBounds(529, 131, 200, 250);
 		painelSubtarefas.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Subtarefas", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		JPanel painelTarefaPai = new JPanel();
-		painelTarefaPai.setBounds(536, 70, 200, 52);
+		painelTarefaPai.setBounds(529, 67, 200, 52);
 		painelTarefaPai.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Tarefa pai", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(63, 21, 45, 15);
+		lblNome.setBounds(56, 18, 45, 15);
 		
 		textoNome = new JTextField();
-		textoNome.setBounds(126, 16, 371, 24);
+		textoNome.setBounds(119, 13, 371, 24);
 		textoNome.setToolTipText("Entre com o nome da tarefa");
 		textoNome.setColumns(10);
 		
 		JLabel lblPrazo = new JLabel("Prazo:");
 		lblPrazo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPrazo.setBounds(35, 55, 73, 15);
+		lblPrazo.setBounds(28, 52, 73, 15);
 		
 		JFormattedTextField textoPrazo = null;
 		
-		try {
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		JLabel lblIntegrantes = new JLabel("Responsáveis:");
 		lblIntegrantes.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblIntegrantes.setBounds(19, 87, 89, 15);
+		lblIntegrantes.setBounds(12, 84, 89, 15);
 		
 		JComboBox comboBoxIntegrantes = new JComboBox();
-		comboBoxIntegrantes.setBounds(126, 82, 259, 24);
+		comboBoxIntegrantes.setBounds(119, 79, 371, 24);
 		comboBoxIntegrantes.setToolTipText("Selecione o integrante");
-		
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(397, 82, 100, 25);
-		btnAdicionar.setMnemonic('A');
-		
-		JScrollPane scrollPaneResponsaveis = new JScrollPane();
-		scrollPaneResponsaveis.setBounds(126, 118, 259, 69);
-		scrollPaneResponsaveis.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		JButton btnRemover = new JButton("Remover");
-		btnRemover.setBounds(397, 116, 100, 25);
-		btnRemover.setToolTipText("Remover integrante selecionado");
-		btnRemover.setMnemonic('R');
 		
 		JLabel lblDescricao = new JLabel("Descrição:");
 		lblDescricao.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescricao.setBounds(34, 201, 74, 15);
-		
-		JScrollPane scrollPaneDescricao = new JScrollPane();
-		scrollPaneDescricao.setBounds(126, 201, 371, 183);
+		lblDescricao.setBounds(27, 198, 74, 15);
 		
 		JLabel lblTarefaPai = new JLabel("");
 		lblTarefaPai.setToolTipText("Clique para abrir");
@@ -150,17 +147,7 @@ public class TelaTarefa {
 		frmNovaTarefa.getContentPane().add(lblPrazo);
 		frmNovaTarefa.getContentPane().add(lblIntegrantes);
 		frmNovaTarefa.getContentPane().add(textoNome);
-		frmNovaTarefa.getContentPane().add(scrollPaneResponsaveis);
-		
-		JList listResponsaveis = new JList();
-		scrollPaneResponsaveis.setViewportView(listResponsaveis);
 		frmNovaTarefa.getContentPane().add(comboBoxIntegrantes);
-		frmNovaTarefa.getContentPane().add(btnRemover);
-		frmNovaTarefa.getContentPane().add(btnAdicionar);
-		frmNovaTarefa.getContentPane().add(scrollPaneDescricao);
-		
-		JEditorPane textoDescricao = new JEditorPane();
-		scrollPaneDescricao.setViewportView(textoDescricao);
 		frmNovaTarefa.getContentPane().add(lblDescricao);
 		frmNovaTarefa.getContentPane().add(painelTarefaPai);
 		frmNovaTarefa.getContentPane().add(painelSubtarefas);
@@ -192,21 +179,30 @@ public class TelaTarefa {
 				tabelaSubtarefas.getColumnModel().getColumn(1).setPreferredWidth(179);
 				scrollPane.setViewportView(tabelaSubtarefas);
 		
-		JSlider sliderProgresso = new JSlider();
-		sliderProgresso.setValue(0);
-		sliderProgresso.setBounds(536, 42, 200, 16);
-		frmNovaTarefa.getContentPane().add(sliderProgresso);
+				
 		
 		JLabel lblProgresso = new JLabel("Progresso:");
-		lblProgresso.setBounds(536, 16, 131, 15);
+		lblProgresso.setBounds(529, 13, 131, 15);
 		frmNovaTarefa.getContentPane().add(lblProgresso);
 		
+		final JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(119, 47, 114, 22);
+		dateChooser.setDateFormatString("dd/MM/yyyy");
+		frmNovaTarefa.getContentPane().add(dateChooser);
+		
+		final JTextArea textDescricao = new JTextArea();
+		textDescricao.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		textDescricao.setBounds(119, 197, 371, 137);
+		frmNovaTarefa.getContentPane().add(textDescricao);
+		
 		JPanel panelBotoes = new JPanel();
-		panelBotoes.setBounds(35, 400, 698, 35);
+		panelBotoes.setBounds(28, 397, 698, 35);
 		frmNovaTarefa.getContentPane().add(panelBotoes);
 		panelBotoes.setLayout(new GridLayout(0, 6, 5, 0));
 		
 		JButton btnAnterior = new JButton("Anterior");
+		
+		
 		panelBotoes.add(btnAnterior);
 		btnAnterior.setMnemonic('n');
 		
@@ -214,21 +210,30 @@ public class TelaTarefa {
 		panelBotoes.add(btnNova);
 		btnNova.setMnemonic('N');
 		
-		JButton btnEditar = new JButton("Editar");
-		panelBotoes.add(btnEditar);
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnEditarSalvar = new JButton("Salvar");
+		btnEditarSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				java.sql.Timestamp ts = new java.sql.Timestamp(dateChooser.getDate().getTime());
+				try {
+					fTarefa.salvar(textoNome.getText(),textDescricao.getText(), ts, (Integer) null, 01);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//System.out.println(sdf1.format(dateChooser.getDate()));
+				
 			}
 		});
-		btnEditar.setMnemonic('E');
-		
-		JButton btnExcluir = new JButton("Excluir");
-		panelBotoes.add(btnExcluir);
-		btnExcluir.setMnemonic('x');
+		panelBotoes.add(btnEditarSalvar);
+		btnEditarSalvar.setMnemonic('S');
 		
 		JButton btnDividir = new JButton("Dividir");
 		panelBotoes.add(btnDividir);
 		btnDividir.setMnemonic('D');
+		
+		JButton btnExcluir = new JButton("Excluir");
+		panelBotoes.add(btnExcluir);
+		btnExcluir.setMnemonic('x');
 		
 		JButton btnPrximo = new JButton("Próximo");
 		panelBotoes.add(btnPrximo);
@@ -236,11 +241,13 @@ public class TelaTarefa {
 		
 		JLabel labelProgresso = new JLabel("");
 		labelProgresso.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelProgresso.setBounds(647, 15, 89, 15);
+		labelProgresso.setBounds(640, 12, 89, 15);
 		frmNovaTarefa.getContentPane().add(labelProgresso);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(126, 50, 114, 22);
-		frmNovaTarefa.getContentPane().add(dateChooser);
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(529, 37, 200, 17);
+		frmNovaTarefa.getContentPane().add(progressBar);
+		
+		
 	}
 }

@@ -27,7 +27,7 @@ create table Equipe(
 );
 
 create table Integrante(
-	candidatoId int not null, 
+	candidatoId int primary key not null, 
 	equipeId int not null, 
 	primary key(candidatoId), 
 	constraint FK_Candidato_Id FOREIGN KEY (candidatoId) REFERENCES Candidato(id), 
@@ -50,12 +50,13 @@ create table Frequencia(
 
 create table Tarefa(
 	id int primary key auto_increment, 
+	nome varchar(80) not null,
 	descricao varchar(255) not null, 
 	prazo timestamp not null, 
-	reuniaoId int, 
 	tarefaPaiId int, 
-	projetoId int not null, 
-	constraint FK_Tarefa_Integrante_Id FOREIGN KEY (reuniaoId) REFERENCES Reuniao(id), 
+	integranteId int not null,
+	projetoId int not null,  
 	constraint FK_Tarefa_Id FOREIGN KEY (tarefaPaiId) REFERENCES Tarefa(id), 
-	constraint FK_Projeto_Id FOREIGN KEY (projetoId) REFERENCES Projeto(id)
+	constraint FK_Projeto_Id FOREIGN KEY (projetoId) REFERENCES Projeto(id),
+	constraint FK_Integrante_Tarefa_Id FOREIGN KEY (integranteId) REFERENCES Integrante(candidatoId)
 );
