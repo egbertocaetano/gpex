@@ -25,6 +25,10 @@ import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSlider;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.GridLayout;
 
 public class TelaTarefa {
 
@@ -62,130 +66,61 @@ public class TelaTarefa {
 		frmNovaTarefa = new JFrame();
 		frmNovaTarefa.setResizable(false);
 		frmNovaTarefa.setTitle("Nova tarefa");
-		frmNovaTarefa.setBounds(100, 100, 766, 573);
+		frmNovaTarefa.setBounds(-29, -28, 777, 473);
 		frmNovaTarefa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel painelSubtarefas = new JPanel();
-		painelSubtarefas.setBounds(550, 216, 200, 264);
+		painelSubtarefas.setBounds(536, 134, 200, 250);
 		painelSubtarefas.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Subtarefas", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		JPanel painelTarefaPai = new JPanel();
-		painelTarefaPai.setBounds(550, 108, 200, 69);
+		painelTarefaPai.setBounds(536, 70, 200, 52);
 		painelTarefaPai.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Tarefa pai", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(35, 58, 45, 15);
+		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNome.setBounds(63, 16, 45, 15);
 		
 		textoNome = new JTextField();
-		textoNome.setBounds(160, 56, 328, 19);
+		textoNome.setBounds(126, 16, 371, 24);
 		textoNome.setToolTipText("Entre com o nome da tarefa");
 		textoNome.setColumns(10);
 		
 		JLabel lblPrazo = new JLabel("Prazo:");
-		lblPrazo.setBounds(35, 97, 73, 15);
+		lblPrazo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrazo.setBounds(35, 55, 73, 15);
 		
 		JFormattedTextField textoPrazo = new JFormattedTextField();
-		textoPrazo.setBounds(160, 95, 112, 19);
+		textoPrazo.setBounds(126, 50, 112, 24);
 		textoPrazo.setToolTipText("Entre com o prazo");
 		
 		JLabel lblIntegrantes = new JLabel("Integrantes:");
-		lblIntegrantes.setBounds(35, 137, 89, 15);
+		lblIntegrantes.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblIntegrantes.setBounds(19, 87, 89, 15);
 		
 		JComboBox comboBoxIntegrantes = new JComboBox();
-		comboBoxIntegrantes.setBounds(160, 132, 259, 24);
+		comboBoxIntegrantes.setBounds(126, 82, 259, 24);
 		comboBoxIntegrantes.setToolTipText("Selecione o integrante");
 		
 		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(431, 132, 100, 25);
+		btnAdicionar.setBounds(397, 82, 100, 25);
 		btnAdicionar.setMnemonic('A');
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(160, 178, 259, 101);
+		scrollPane_1.setBounds(126, 118, 259, 69);
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		JButton btnRemover = new JButton("Remover");
-		btnRemover.setBounds(431, 175, 100, 25);
+		btnRemover.setBounds(397, 116, 100, 25);
 		btnRemover.setToolTipText("Remover integrante selecionado");
 		btnRemover.setMnemonic('R');
 		
 		JLabel lblDescrio = new JLabel("Descrição:");
-		lblDescrio.setBounds(35, 297, 74, 15);
+		lblDescrio.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescrio.setBounds(34, 201, 74, 15);
 		
 		JScrollPane scrollPaneDescricao = new JScrollPane();
-		scrollPaneDescricao.setBounds(160, 297, 371, 183);
-		
-		JButton btnAnterior = new JButton("Anterior");
-		btnAnterior.setBounds(32, 501, 95, 25);
-		btnAnterior.setMnemonic('n');
-		
-		JButton btnNova = new JButton("Nova");
-		btnNova.setBounds(160, 501, 95, 25);
-		btnNova.setMnemonic('N');
-		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEditar.setBounds(291, 501, 95, 25);
-		btnEditar.setMnemonic('E');
-		
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(418, 501, 95, 25);
-		btnExcluir.setMnemonic('x');
-		
-		JButton btnDividir = new JButton("Dividir");
-		btnDividir.setBounds(536, 501, 95, 25);
-		btnDividir.setMnemonic('D');
-		
-		JButton btnPrximo = new JButton("Próximo");
-		btnPrximo.setBounds(655, 501, 95, 25);
-		btnPrximo.setMnemonic('P');
-		
-		JEditorPane textoDescricao = new JEditorPane();
-		scrollPaneDescricao.setViewportView(textoDescricao);
-		
-		JList list = new JList();
-		scrollPane_1.setViewportView(list);
-
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		GroupLayout gl_painelSubtarefas = new GroupLayout(painelSubtarefas);
-		gl_painelSubtarefas.setHorizontalGroup(
-			gl_painelSubtarefas.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_painelSubtarefas.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_painelSubtarefas.setVerticalGroup(
-			gl_painelSubtarefas.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_painelSubtarefas.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		tabelaSubtarefas = new JTable();
-		tabelaSubtarefas.setToolTipText("Clique numa tarefa para abrí-la");
-		tabelaSubtarefas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Tarefa"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		tabelaSubtarefas.getColumnModel().getColumn(0).setPreferredWidth(46);
-		tabelaSubtarefas.getColumnModel().getColumn(1).setPreferredWidth(179);
-		scrollPane.setViewportView(tabelaSubtarefas);
-		painelSubtarefas.setLayout(gl_painelSubtarefas);
+		scrollPaneDescricao.setBounds(126, 201, 371, 183);
 		
 		JLabel lblTarefaPai = new JLabel("");
 		lblTarefaPai.setToolTipText("Clique para abrir");
@@ -214,27 +149,87 @@ public class TelaTarefa {
 		frmNovaTarefa.getContentPane().add(textoNome);
 		frmNovaTarefa.getContentPane().add(textoPrazo);
 		frmNovaTarefa.getContentPane().add(scrollPane_1);
+		
+		JList list = new JList();
+		scrollPane_1.setViewportView(list);
 		frmNovaTarefa.getContentPane().add(comboBoxIntegrantes);
 		frmNovaTarefa.getContentPane().add(btnRemover);
 		frmNovaTarefa.getContentPane().add(btnAdicionar);
 		frmNovaTarefa.getContentPane().add(scrollPaneDescricao);
+		
+		JEditorPane textoDescricao = new JEditorPane();
+		scrollPaneDescricao.setViewportView(textoDescricao);
 		frmNovaTarefa.getContentPane().add(lblDescrio);
 		frmNovaTarefa.getContentPane().add(painelTarefaPai);
 		frmNovaTarefa.getContentPane().add(painelSubtarefas);
-		frmNovaTarefa.getContentPane().add(btnAnterior);
-		frmNovaTarefa.getContentPane().add(btnNova);
-		frmNovaTarefa.getContentPane().add(btnEditar);
-		frmNovaTarefa.getContentPane().add(btnExcluir);
-		frmNovaTarefa.getContentPane().add(btnDividir);
-		frmNovaTarefa.getContentPane().add(btnPrximo);
+		painelSubtarefas.setLayout(new GridLayout(1, 0, 0, 0));
+		
+				
+				JScrollPane scrollPane = new JScrollPane();
+				painelSubtarefas.add(scrollPane);
+				scrollPane.setViewportBorder(null);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				
+				tabelaSubtarefas = new JTable();
+				tabelaSubtarefas.setToolTipText("Clique numa tarefa para abrí-la");
+				tabelaSubtarefas.setModel(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"ID", "Tarefa"
+					}
+				) {
+					Class[] columnTypes = new Class[] {
+						String.class, String.class
+					};
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
+				});
+				tabelaSubtarefas.getColumnModel().getColumn(0).setPreferredWidth(46);
+				tabelaSubtarefas.getColumnModel().getColumn(1).setPreferredWidth(179);
+				scrollPane.setViewportView(tabelaSubtarefas);
 		
 		JSlider sliderProgresso = new JSlider();
 		sliderProgresso.setValue(100);
-		sliderProgresso.setBounds(550, 75, 200, 16);
+		sliderProgresso.setBounds(536, 42, 200, 16);
 		frmNovaTarefa.getContentPane().add(sliderProgresso);
 		
 		JLabel lblProgresso = new JLabel("Progresso:");
-		lblProgresso.setBounds(550, 56, 131, 15);
+		lblProgresso.setBounds(536, 16, 131, 15);
 		frmNovaTarefa.getContentPane().add(lblProgresso);
+		
+		JPanel panelBotoes = new JPanel();
+		panelBotoes.setBounds(35, 400, 698, 35);
+		frmNovaTarefa.getContentPane().add(panelBotoes);
+		panelBotoes.setLayout(new GridLayout(0, 6, 5, 0));
+		
+		JButton btnAnterior = new JButton("Anterior");
+		panelBotoes.add(btnAnterior);
+		btnAnterior.setMnemonic('n');
+		
+		JButton btnNova = new JButton("Nova");
+		panelBotoes.add(btnNova);
+		btnNova.setMnemonic('N');
+		
+		JButton btnEditar = new JButton("Editar");
+		panelBotoes.add(btnEditar);
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnEditar.setMnemonic('E');
+		
+		JButton btnExcluir = new JButton("Excluir");
+		panelBotoes.add(btnExcluir);
+		btnExcluir.setMnemonic('x');
+		
+		JButton btnDividir = new JButton("Dividir");
+		panelBotoes.add(btnDividir);
+		btnDividir.setMnemonic('D');
+		
+		JButton btnPrximo = new JButton("Próximo");
+		panelBotoes.add(btnPrximo);
+		btnPrximo.setMnemonic('P');
 	}
 }
