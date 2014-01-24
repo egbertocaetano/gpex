@@ -1,6 +1,9 @@
 package gpex.bd.DAO;
 
+import gpex.obj.Candidato;
+import gpex.obj.Equipe;
 import gpex.obj.Integrante;
+import gpex.obj.Projeto;
 
 import java.util.ArrayList;
 
@@ -108,12 +111,12 @@ public class IntegranteDAO extends BasicSql<Integrante>{
 		
 		abreConexao();
 		
-		rs = stmt.executeQuery("SELECT * FROM Integrante WHERE candidatoId LIKE '"
-				+ id + "%';");
+		rs = stmt.executeQuery("SELECT * FROM Integrante WHERE candidatoId LIKE '" + id + "%';");
 		
 		Integrante temp = new Integrante(
 				new CandidatoDAO().buscarId(rs.getInt("candidatoId")),
 				new EquipeDAO().buscarId(rs.getInt("equipeId")));
+				//new Candidato(10, "sahduas", "hsuh", "haushuahs"), new Equipe(29, new Projeto(22, "descricaosd")));
 		
 		fechaConexao();
 		

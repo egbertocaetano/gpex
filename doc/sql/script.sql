@@ -9,10 +9,10 @@ create table Selecao(
 );
 
 create table Candidato(
-	id int primary key auto_increment, 
+	id int primary key auto_increment,
 	nome varchar(255) not null, 
-	matricula varchar(10) not null unique, 
-	email varchar(255) not null
+	matricula varchar(10) not null, 
+	email varchar(255) not null,
 );
 
 create table Projeto(

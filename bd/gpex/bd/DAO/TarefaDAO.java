@@ -19,10 +19,13 @@ public class TarefaDAO extends BasicSql<Tarefa>{
 		
 		abreConexao();
 		
-        stmt.executeUpdate("INSERT INTO Tarefa VALUES('"
-               + tarefa.getId() + "', '" + tarefa.getDescricao() 
-               + "', '" + tarefa.getPrazo() + "', '" + tarefa.getReuniao() 
-               + "', '" + tarefa.getPai() + "', '" + tarefa.getProjeto() + "')");
+        stmt.executeUpdate("INSERT INTO Tarefa(nome, descricao, prazo, tarefaPaiId, integranteId, projetoID) VALUES('"
+               + tarefa.getNome() + "', '"
+               + tarefa.getDescricao() + "', '" 
+               + tarefa.getPrazo() + "', '"  
+               + tarefa.getPai().getId() + "', '"
+               + tarefa.getResponsavel().getCandidato().getId() + "', '" //isso ta com cheiro de gambiarra... -valber
+               + tarefa.getProjeto().getId() + "')");
          
          System.out.println("Tarefa cadastrada com sucesso.");
          
@@ -41,11 +44,12 @@ public class TarefaDAO extends BasicSql<Tarefa>{
 		
 		abreConexao();
 		
-		stmt.executeUpdate("UPDATE Tarefa SET descricao = '" + tarefa.getDescricao() 
+		
+		/*stmt.executeUpdate("UPDATE Tarefa SET descricao = '" + tarefa.getDescricao() 
 				+ "', prazo = '" + tarefa.getPrazo() + "', reuniaoId = " + tarefa.getReuniao() 
 				+ ", tarefaPaiId = " + tarefa.getPai() + ", projetoId = " + tarefa.getProjeto() 
 				+ " WHERE  id = '" + tarefa.getId() + "';");
-		
+		*/
 		
 		System.out.println("Tarefa atualizada com sucesso.");
 		
@@ -86,9 +90,10 @@ public class TarefaDAO extends BasicSql<Tarefa>{
 		rs = stmt.executeQuery("SELECT * FROM Tarefa");
 		while (rs.next()) {
 			Tarefa temp = new Tarefa(rs.getInt("id"),
-					rs.getString("descricao"),
+					rs.getString("nome"),
 					rs.getTimestamp("prazo"),
-					new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")),
+					new IntegranteDAO().buscarId(rs.getInt("integranteId")),
+					rs.getString("descricao"),					
 					new TarefaDAO().buscarId(rs.getInt("tarefaPaiId")),
 					new ProjetoDAO().buscarId(rs.getInt("projetoId")));
 			resultados.add(temp);
@@ -114,9 +119,10 @@ public class TarefaDAO extends BasicSql<Tarefa>{
 				+ id + "%';");
 		
 		Tarefa temp = new Tarefa(rs.getInt("id"),
-				rs.getString("descricao"),
+				rs.getString("nome"),
 				rs.getTimestamp("prazo"),
-				new ReuniaoDAO().buscarId(rs.getInt("reuniaoId")),
+				new IntegranteDAO().buscarId(rs.getInt("integranteId")),
+				rs.getString("descricao"),					
 				new TarefaDAO().buscarId(rs.getInt("tarefaPaiId")),
 				new ProjetoDAO().buscarId(rs.getInt("projetoId")));
 		

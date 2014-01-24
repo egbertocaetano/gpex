@@ -27,16 +27,16 @@ public  class FacadeTarefa {
 	public static int salvar(String nome, String descricao, Timestamp prazo, int pai_id, int projeto_id, int responsavel_id) throws Exception{
 		new TarefaDAO().inserir(new Tarefa(
 				nome,
-				descricao,
 				prazo,
+				new IntegranteDAO().buscarId(responsavel_id),
+				descricao,
 				new TarefaDAO().buscarId(pai_id),
-				new ProjetoDAO().buscarId(projeto_id),
-				new IntegranteDAO().buscarId(responsavel_id)));
+				new ProjetoDAO().buscarId(projeto_id)));
 		
 		return 0;
 	}
 	
-	public static int alterar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id, int responsavel_id) throws Exception{
+/*	public static int alterar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id, int responsavel_id) throws Exception{
 		new TarefaDAO().alterar(new Tarefa(
 				id,
 				nome,
@@ -48,8 +48,8 @@ public  class FacadeTarefa {
 		
 		return 0;
 	}
-	
-	public static int deletar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
+*/	
+/*	public static int deletar(int id, String nome, String descricao, Timestamp prazo, int reuniao_id, int pai_id, int projeto_id) throws Exception{
 		new TarefaDAO().deletar(new Tarefa(
 				id,
 				nome,
@@ -60,7 +60,7 @@ public  class FacadeTarefa {
 		
 		return 0;
 	}
-	
+*/	
 	public ArrayList<Object[]> buscarTodos() throws Exception{
 		ArrayList<Tarefa> listaTarefas = new TarefaDAO().buscarTodos();
 		ArrayList<Object[]> listaTarefasSplited = new ArrayList<>();

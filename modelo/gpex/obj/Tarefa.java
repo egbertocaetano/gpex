@@ -11,9 +11,10 @@ public class Tarefa {
 	private Tarefa pai;
 	private Projeto projeto;
 	private Integrante responsavel;
+	private String status;
 	
 	
-	public Tarefa(String nome, String descricao, Timestamp prazo,Tarefa pai, Projeto projeto, Integrante responsavel){
+	public Tarefa(String nome, Timestamp prazo, Integrante responsavel, String descricao, Tarefa pai, Projeto projeto){
 		this.nome = nome;
 		this.descricao = descricao;
 		this.prazo = prazo;
@@ -22,7 +23,7 @@ public class Tarefa {
 		this.responsavel = responsavel;
 	}
 	
-	public Tarefa(int id, String nome, String descricao, Timestamp prazo,Tarefa pai, Projeto projeto, Integrante responsavel){
+	public Tarefa(int id, String nome, Timestamp prazo, Integrante responsavel, String descricao, Tarefa pai, Projeto projeto){
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -49,5 +50,9 @@ public class Tarefa {
 	}
 	public Projeto getProjeto() {
 		return projeto;
+	}
+	
+	public Integrante getResponsavel() {
+		return responsavel;
 	}
 }
