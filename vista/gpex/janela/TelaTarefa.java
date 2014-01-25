@@ -88,7 +88,7 @@ public class TelaTarefa {
 		frmNovaTarefa = new JFrame();
 		frmNovaTarefa.setResizable(false);
 		frmNovaTarefa.setTitle("Nova tarefa");
-		frmNovaTarefa.setBounds(-16, -28, 758, 412);
+		frmNovaTarefa.setBounds(100, 100, 758, 412);
 		frmNovaTarefa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel painelSubtarefas = new JPanel();

@@ -5,6 +5,7 @@ import gpex.obj.Equipe;
 import gpex.obj.Integrante;
 import gpex.obj.Projeto;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class IntegranteDAO extends BasicSql<Integrante>{
@@ -110,9 +111,10 @@ public class IntegranteDAO extends BasicSql<Integrante>{
 	public Integrante buscarId(int id) throws Exception {
 		
 		abreConexao();
+		stmt = con.createStatement();
 		
-		rs = stmt.executeQuery("SELECT * FROM Integrante WHERE candidatoId LIKE '" + id + "%';");
-		
+		rs = stmt.executeQuery("SELECT * FROM Integrante WHERE candidatoId = " + id + ";");
+		rs.next();
 		Integrante temp = new Integrante(
 				new CandidatoDAO().buscarId(rs.getInt("candidatoId")),
 				new EquipeDAO().buscarId(rs.getInt("equipeId")));
