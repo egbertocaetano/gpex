@@ -95,8 +95,7 @@ public class ConnectionMock implements Connection {
 
 	@Override
 	public Statement createStatement(int arg0, int arg1) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new StatementMock();
 	}
 
 	@Override

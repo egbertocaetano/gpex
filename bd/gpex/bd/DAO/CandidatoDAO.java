@@ -14,6 +14,7 @@ public class CandidatoDAO extends BasicSql<Candidato>{
 		candidato = object;
 		
 		abreConexao();
+		stmt = con.createStatement();
 		
 		stmt.executeUpdate("INSERT INTO Candidato VALUES('"
 				+ candidato.getId() + "', '" + candidato.getNome() + "',"
